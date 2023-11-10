@@ -2,7 +2,6 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import Color from "color";
 
 import {
   Form,
@@ -16,7 +15,7 @@ import { Input } from "@/components/ui/input";
 
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Heading } from "@/components/customUi/Heading";
+import { Heading } from "@/components/customUi/heading";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";

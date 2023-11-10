@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Heading } from "@/components/customUi/Heading";
+import { Heading } from "@/components/customUi/heading";
 import {
   Form,
   FormControl,
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/Separator";
+import { Separator } from "@/components/ui/separator";
 import axios from "axios";
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
