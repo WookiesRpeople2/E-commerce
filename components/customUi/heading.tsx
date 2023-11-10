@@ -1,6 +1,6 @@
 "use client";
 
-import { Separator } from "@/components/ui/Separator";
+import { Separator } from "@/components/ui/separator";
 
 interface HeadingProps {
   title: string;
