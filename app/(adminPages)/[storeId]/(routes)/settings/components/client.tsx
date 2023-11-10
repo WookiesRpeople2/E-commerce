@@ -1,7 +1,7 @@
 "use client";
-import { Heading } from "@/components/customUi/Heading";
+import { Heading } from "@/components/customUi/heading";
 import { SettingsForm } from "./settingsForm";
-import { StoreStatus } from "./StoreStatus";
+import { StoreStatus } from "./storeStatus";
 
 type SettingsClient = {
   status?: string | null;

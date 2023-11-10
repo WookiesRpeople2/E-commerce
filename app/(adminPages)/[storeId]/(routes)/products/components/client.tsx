@@ -1,7 +1,7 @@
 "use client";
 
 import { DataTable } from "@/components/customUi/data-table";
-import { Heading } from "@/components/customUi/Heading";
+import { Heading } from "@/components/customUi/heading";
 import { Product } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 import { columns } from "./columns";

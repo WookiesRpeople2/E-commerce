@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Heading } from "@/components/customUi/Heading";
+import { Heading } from "@/components/customUi/heading";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -23,7 +23,6 @@ import { UploadImage } from "@/components/customUi/uploadImage";
 import { Collection, ProductColor, ProductSize } from "@prisma/client";
 import { ColorsButton } from "@/components/customUi/colorsButton";
 import { Combobox } from "@/components/customUi/combobox";
-import { ColorsCircle } from "@/components/customUi/colorsCircle";
 import { SizesButton } from "@/components/customUi/sizesButton";
 
 const formSchema = z.object({
