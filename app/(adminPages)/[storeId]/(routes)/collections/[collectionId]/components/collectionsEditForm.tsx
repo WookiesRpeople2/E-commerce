@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { UploadImage } from "@/components/customUi/uploadImage";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Heading } from "@/components/customUi/Heading";
+import { Heading } from "@/components/customUi/heading";
 import { useParams, useRouter } from "next/navigation";
 import { AlerteModel } from "@/components/customUi/alerteModel";
 import { Trash } from "lucide-react";
