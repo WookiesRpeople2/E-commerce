@@ -7,7 +7,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { Heading } from "@/components/customUi/Heading";
 import { ChevronDown, MousePointerSquare, Trash } from "lucide-react";
 import {
   Command,
