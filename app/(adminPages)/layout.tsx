@@ -24,13 +24,20 @@ export default async function AdminLayout({
     },
   });
 
-  if (!store) {
+  const stores = await prismadb.store.findMany({
+    where: {
+      id: params.storeId,
+      userId,
+    },
+  });
+
+  if (!store || !stores) {
     redirect("/");
   }
 
   return (
     <>
-      <Navbar storeName={store.storeName} />
+      <Navbar stores={stores} />
       {children}
     </>
   );

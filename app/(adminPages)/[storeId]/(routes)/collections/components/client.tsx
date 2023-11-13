@@ -2,8 +2,10 @@
 
 import { DataTable } from "@/components/customUi/data-table";
 import { Heading } from "@/components/customUi/heading";
+import { useCollections } from "@/hooks/useCollections";
 import { Collection } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { columns } from "./columns";
 
 interface CollecionsClientProps {
@@ -15,6 +17,11 @@ export const CollecionsClient: React.FC<CollecionsClientProps> = ({
 }) => {
   const router = useRouter();
   const params = useParams();
+  const { collection, updateCollections } = useCollections();
+
+  useEffect(() => {
+    updateCollections(collections);
+  }, [collections, updateCollections]);
 
   const onNew = () => {
     router.push(`/${params.storeId}/collections/create`);
@@ -33,7 +40,7 @@ export const CollecionsClient: React.FC<CollecionsClientProps> = ({
           onNew={onNew}
           filter="collectionName"
           columns={columns}
-          data={collections}
+          data={collection}
         />
       </div>
     </div>

@@ -55,6 +55,7 @@ export const SettingsForm = () => {
       setIsLoading(true);
       await axios.delete(`/api/stores/${params.storeId}/settings`);
       router.refresh();
+      router.push("/");
     } catch (error) {
       toast.error("an Error has occured");
     } finally {

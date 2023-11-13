@@ -25,10 +25,11 @@ export const SizesButton: React.FC<SizesButtonProps> = ({
   };
 
   return (
-    <div className="space-x-4">
+    <div className="flex flex-wrap gap-2">
       {sizes &&
         sizes.map((size) => (
           <Button
+            type="button"
             variant={value.includes(size.size) ? "default" : "secondary"}
             className={cn(
               value.includes(size.size) ? "text-white" : "text-muted-foreground"

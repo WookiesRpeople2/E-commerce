@@ -3,9 +3,9 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import prismadb from "@/lib/prismadb";
 
-export async function POST(
+export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string } }
+  { params }: { params: { storeId: string; productId: string } }
 ) {
   try {
     const {
@@ -46,8 +46,15 @@ export async function POST(
     if (!params.storeId) {
       return new NextResponse("storeId is required");
     }
+    if (!params.productId) {
+      return new NextResponse("Products id is required", { status: 400 });
+    }
 
-    const newProduct = await prismadb.product.create({
+    const productPatch = await prismadb.product.updateMany({
+      where: {
+        id: params.productId,
+        storeId: params.storeId,
+      },
       data: {
         productName,
         productImages,
@@ -57,28 +64,62 @@ export async function POST(
         price,
         diliveryPrice,
         collectionName,
-        storeId: params.storeId,
       },
     });
 
-    return NextResponse.json(newProduct);
+    return NextResponse.json(productPatch);
   } catch (error) {
-    console.log("/STORES/STOREID/PRODUCTS/POST");
+    console.log("/STORES/STOREID/Product/ProductID/PATCH");
     return NextResponse.json(error);
   }
 }
 
-export async function GET({ params }: { params: { storeId: string } }) {
+export async function DELETE(
+  req: Request,
+  { params }: { params: { storeId: string; productId: string } }
+) {
   try {
-    const products = await prismadb.product.findMany({
+    const session = await getServerSession(authOptions);
+    const userId = session?.user.userId;
+
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+    if (!params.storeId) {
+      return new NextResponse("storeId is required");
+    }
+    if (!params.productId) {
+      return new NextResponse("Collection Id is required", { status: 400 });
+    }
+
+    const productDelete = await prismadb.product.delete({
       where: {
+        id: params.productId,
         storeId: params.storeId,
       },
     });
 
-    return NextResponse.json(products);
+    return NextResponse.json(productDelete);
   } catch (error) {
-    console.log("STORES/STOREID/PRODUCTS/GET");
+    console.log("/STORES/STOREID/PRODUCTS/PRODUCTID/DEDLETE");
+    return NextResponse.json(error);
+  }
+}
+
+export async function GET(
+  req: Request,
+  { params }: { params: { storeId: string; productId: string } }
+) {
+  try {
+    const productGet = await prismadb.product.findFirst({
+      where: {
+        id: params.productId,
+        storeId: params.storeId,
+      },
+    });
+    return NextResponse.json(productGet);
+  } catch (error) {
+    console.log("/STORES/STOREID/PRODUCTS/PRODUCTID/GET");
     return NextResponse.json(error);
   }
 }

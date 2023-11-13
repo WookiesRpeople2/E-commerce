@@ -9,6 +9,7 @@ export type Products = {
   productName: string;
   colors: string[];
   sizes: string[];
+  featured: boolean;
   price: number;
   diliveryPrice: number;
   collectionName: string | null;
@@ -36,6 +37,10 @@ export const columns: ColumnDef<Products>[] = [
   {
     accessorKey: "sizes",
     header: () => <div className="text-xl">Sizes</div>,
+  },
+  {
+    accessorKey: "featured",
+    header: () => <div className="text-xl">Featured</div>,
   },
   {
     accessorKey: "price",

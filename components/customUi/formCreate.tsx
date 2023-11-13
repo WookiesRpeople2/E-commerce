@@ -36,7 +36,6 @@ export const FormCreate = () => {
   });
 
   const router = useRouter();
-  const params = useParams();
   const [isLoading, setIsloading] = useState(false);
 
   const onSubmit = async (data: TypeOfFormSchema) => {

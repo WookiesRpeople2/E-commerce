@@ -7,8 +7,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { Heading } from "@/components/customUi/Heading";
-import { ChevronDown, MousePointerSquare, Trash } from "lucide-react";
+import {
+  ChevronDown,
+  MousePointerSquare,
+  PlusCircle,
+  Shirt,
+  Trash,
+} from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -23,28 +28,25 @@ type ValueObjects = {
   label: string;
 };
 
-type ComboboxProps = {
+type StoreComboboxProps = {
   values: ValueObjects[];
-  btnTitle: string;
-  exsistingValue?: string;
+  store: string;
+  onClick: () => void;
   onChange: (value: string | null) => void;
 };
 
-export const Combobox: React.FC<ComboboxProps> = ({
+export const StoreCombobox: React.FC<StoreComboboxProps> = ({
   values,
-  btnTitle,
-  exsistingValue,
+  store,
+  onClick,
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(exsistingValue || null);
+  const [selectedValue, setSelectedValue] = useState(store);
 
   const onSelect = (currentValue: string) => {
-    const newValue = currentValue === selectedValue ? null : currentValue;
-
-    onChange(newValue);
-    setSelectedValue(newValue);
-
+    onChange(currentValue);
+    setSelectedValue(currentValue === selectedValue ? store : currentValue);
     setIsOpen(false);
   };
   return (
@@ -53,9 +55,9 @@ export const Combobox: React.FC<ComboboxProps> = ({
         <div className="flex space-x-2">
           <PopoverTrigger asChild>
             <Button variant="outline" role="combobox" aria-expanded={isOpen}>
-              {selectedValue
-                ? values.find((value) => value.name === selectedValue)?.label
-                : btnTitle}
+              <Shirt className="mr-auto h-4 w-4" />
+              {selectedValue &&
+                values.find((value) => value.name === selectedValue)?.label}
               <ChevronDown className="ml-auto h-4 w-4" />
             </Button>
           </PopoverTrigger>
@@ -80,6 +82,16 @@ export const Combobox: React.FC<ComboboxProps> = ({
                   {value.label}
                 </CommandItem>
               ))}
+              <CommandItem className="flex justify-center items-center">
+                <Button
+                  variant="outline"
+                  onClick={onClick}
+                  className="space-x-2"
+                >
+                  <PlusCircle className="w-4 h-4" />
+                  <span>Create a new store</span>
+                </Button>
+              </CommandItem>
             </CommandGroup>
           </Command>
         </PopoverContent>

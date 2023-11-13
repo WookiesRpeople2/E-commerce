@@ -80,6 +80,7 @@ model Product {
   productImages  String[]
   colors         String[]
   sizes          String[]
+  featured       Boolean     @default(false)
   price          Float
   diliveryPrice  Float
   storeId        String

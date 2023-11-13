@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useCollections } from "@/hooks/useCollections";
 import axios from "axios";
 import { ClipboardCopyIcon, MoreHorizontal, Pencil, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
@@ -24,6 +25,7 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { deleteCollection } = useCollections();
 
   const onCopy = () => {
     navigator.clipboard.writeText(data.id);
@@ -40,7 +42,7 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
       await axios.delete(
         `/api/stores/${params.storeId}/collections/${data.id}`
       );
-      router.refresh();
+      deleteCollection(data.id);
       toast.success("Collection Deleted");
     } catch (error) {
       toast.error("Something went wrong");

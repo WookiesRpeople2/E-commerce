@@ -24,15 +24,17 @@ import { Collection, ProductColor, ProductSize } from "@prisma/client";
 import { ColorsButton } from "@/components/customUi/colorsButton";
 import { Combobox } from "@/components/customUi/combobox";
 import { SizesButton } from "@/components/customUi/sizesButton";
+import { FeaturedCheckBox } from "@/components/customUi/featuredCheckBox";
 
 const formSchema = z.object({
   productName: z.string().min(1),
   productImages: z.array(z.string()).min(1),
   colors: z.array(z.string()).min(1),
   sizes: z.array(z.string()).min(1),
+  featured: z.boolean().optional(),
   price: z.string().min(1),
   diliveryPrice: z.string().min(1),
-  collectionName: z.string().optional(),
+  collectionName: z.string().optional().nullable(),
 });
 
 type TypeOfFormSchema = z.infer<typeof formSchema>;
@@ -55,6 +57,7 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
       productImages: [],
       colors: [],
       sizes: [],
+      featured: false,
       price: "",
       diliveryPrice: "",
       collectionName: "",
@@ -96,7 +99,10 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
       </div>
       <div className="flex justify-center items-center">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          >
             <FormField
               control={form.control}
               name="productName"
@@ -105,26 +111,6 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
                   <FormLabel>Product Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Jordons" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="productImages"
-              render={({ field }) => (
-                <FormItem className="w-80">
-                  <FormControl>
-                    <UploadImage
-                      fieldArray={field.value}
-                      disabled={isLoading}
-                      onValueChange={(url) =>
-                        field.onChange([...field.value, url])
-                      }
-                      onRemoveValue={() => field.onChange([])}
-                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -219,9 +205,49 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
                 </FormItem>
               )}
             />
-            <Button disabled={isLoading} type="submit">
-              Submit
-            </Button>
+
+            <FormField
+              control={form.control}
+              name="featured"
+              render={({ field }) => (
+                <FormItem className="w-80">
+                  <FormControl>
+                    <FeaturedCheckBox
+                      check={field.value}
+                      onCheckChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="productImages"
+              render={({ field }) => (
+                <FormItem className="w-80">
+                  <FormControl>
+                    <UploadImage
+                      fieldArray={field.value}
+                      disabled={isLoading}
+                      onValueChange={(url) =>
+                        field.onChange([...field.value, url])
+                      }
+                      onRemoveValue={() => field.onChange([])}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="col-span-3">
+              <div className="flex justify-start">
+                <Button disabled={isLoading} type="submit">
+                  Submit
+                </Button>
+              </div>
+            </div>
           </form>
         </Form>
       </div>

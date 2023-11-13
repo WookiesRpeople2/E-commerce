@@ -26,10 +26,11 @@ export const ColorsButton: React.FC<ColorsPreviewProps> = ({
   };
 
   return (
-    <div className="space-x-4">
+    <div className="flex flex-wrap gap-2">
       {colorNames &&
         colorNames.map((colorName) => (
           <Button
+            type="button"
             variant={value.includes(colorName.color) ? "default" : "secondary"}
             className={cn(
               value.includes(colorName.color)

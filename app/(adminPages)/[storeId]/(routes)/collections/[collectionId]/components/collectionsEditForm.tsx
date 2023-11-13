@@ -19,7 +19,6 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/customUi/heading";
 import { useParams, useRouter } from "next/navigation";
 import { AlerteModel } from "@/components/customUi/alerteModel";
-import { Trash } from "lucide-react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 

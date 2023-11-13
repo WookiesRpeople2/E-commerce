@@ -31,17 +31,15 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
   };
 
   const onEdit = () => {
-    router.push(`/${params.storeId}/collections/${data.id}`);
+    router.push(`/${params.storeId}/products/${data.id}`);
   };
 
   const onDelete = async () => {
     try {
       setIsLoading(true);
-      await axios.delete(
-        `/api/stores/${params.storeId}/collections/${data.id}`
-      );
+      await axios.delete(`/api/stores/${params.storeId}/products/${data.id}`);
       router.refresh();
-      toast.success("Collection Deleted");
+      toast.success("Product Deleted");
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
@@ -53,7 +51,7 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
   return (
     <>
       <AlerteModel
-        description="this action will delete this collection, it can not be undone IMPORTANT: THIS WILL ALSO DELETE THE PRODUCTS FROM THIS COLLECTION"
+        description="this action will delete this product, it can not be undone"
         disabled={isLoading}
         onContinue={onDelete}
         onCancel={() => setOpen(false)}
