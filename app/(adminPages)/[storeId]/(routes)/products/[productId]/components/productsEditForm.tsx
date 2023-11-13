@@ -70,34 +70,37 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
 
-  const onSubmit = useCallback(async (formValue: TypeOfFormSchema) => {
-    const collection = collections?.find(
-      (collection) =>
-        collection.collectionName.toLowerCase() === formValue.collectionName
-    );
-    try {
-      setIsLoading(true);
-      await axios.patch(
-        `/api/stores/${params.storeId}/products/${params.productId}`,
-        {
-          ...formValue,
-          price: Number(formValue.price),
-          diliveryPrice: Number(formValue.diliveryPrice),
-          collectionName: collection?.collectionName
-            ? collection.collectionName
-            : null,
-        }
+  const onSubmit = useCallback(
+    async (formValue: TypeOfFormSchema) => {
+      const collection = collections?.find(
+        (collection) =>
+          collection.collectionName.toLowerCase() === formValue.collectionName
       );
+      try {
+        setIsLoading(true);
+        await axios.patch(
+          `/api/stores/${params.storeId}/products/${params.productId}`,
+          {
+            ...formValue,
+            price: Number(formValue.price),
+            diliveryPrice: Number(formValue.diliveryPrice),
+            collectionName: collection?.collectionName
+              ? collection.collectionName
+              : null,
+          }
+        );
 
-      router.refresh();
-      router.push(`/${params.storeId}/products`);
-      toast.success("Product updated");
-    } catch (error) {
-      toast.error("Something went wrong");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+        router.refresh();
+        router.push(`/${params.storeId}/products`);
+        toast.success("Product updated");
+      } catch (error) {
+        toast.error("Something went wrong");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [params.productId, params.storeId]
+  );
 
   const onDelete = useCallback(async () => {
     try {
@@ -114,7 +117,7 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [params.productId, params.storeId]);
 
   return (
     <>

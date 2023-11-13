@@ -47,22 +47,25 @@ export const CollectionEditForm: React.FC<CollectionAddEditFormProps> = ({
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = useCallback(async (formValue: TypeOfFormSchema) => {
-    try {
-      setIsLoading(true);
-      await axios.patch(
-        `/api/stores/${params.storeId}/collections/${params.collectionId}`,
-        formValue
-      );
-      router.refresh();
-      router.push(`/${params.storeId}/collections`);
-      toast.success("Collection Update");
-    } catch (error) {
-      toast.error("Something went wrong");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const onSubmit = useCallback(
+    async (formValue: TypeOfFormSchema) => {
+      try {
+        setIsLoading(true);
+        await axios.patch(
+          `/api/stores/${params.storeId}/collections/${params.collectionId}`,
+          formValue
+        );
+        router.refresh();
+        router.push(`/${params.storeId}/collections`);
+        toast.success("Collection Update");
+      } catch (error) {
+        toast.error("Something went wrong");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [params.collectionId, params.storeId]
+  );
 
   const onDelete = useCallback(async () => {
     try {
@@ -80,7 +83,7 @@ export const CollectionEditForm: React.FC<CollectionAddEditFormProps> = ({
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [params.collectionId, params.storeId]);
 
   return (
     <>

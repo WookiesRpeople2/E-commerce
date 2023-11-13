@@ -53,20 +53,23 @@ export const CreateProductColorForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = useCallback(async (formValue: TypeOfFormSchema) => {
-    try {
-      setIsLoading(true);
-      await axios.post(`/api/stores/${params.storeId}/colors/`, formValue);
-      toast.success("Color Created");
+  const onSubmit = useCallback(
+    async (formValue: TypeOfFormSchema) => {
+      try {
+        setIsLoading(true);
+        await axios.post(`/api/stores/${params.storeId}/colors/`, formValue);
+        toast.success("Color Created");
 
-      router.refresh();
-      router.push(`/${params.storeId}/colors`);
-    } catch (error) {
-      toast.error("Something went wrong");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+        router.refresh();
+        router.push(`/${params.storeId}/colors`);
+      } catch (error) {
+        toast.error("Something went wrong");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [params.colorId, params.storeId]
+  );
 
   return (
     <>

@@ -68,29 +68,32 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState("");
 
-  const onSubmit = useCallback(async (formValue: TypeOfFormSchema) => {
-    const collection = collections?.find(
-      (collection) =>
-        collection.collectionName.toLowerCase() === formValue.collectionName
-    );
-    try {
-      setIsLoading(true);
-      await axios.post(`/api/stores/${params.storeId}/products`, {
-        ...formValue,
-        price: Number(formValue.price),
-        diliveryPrice: Number(formValue.diliveryPrice),
-        collectionName: collection?.collectionName,
-      });
+  const onSubmit = useCallback(
+    async (formValue: TypeOfFormSchema) => {
+      const collection = collections?.find(
+        (collection) =>
+          collection.collectionName.toLowerCase() === formValue.collectionName
+      );
+      try {
+        setIsLoading(true);
+        await axios.post(`/api/stores/${params.storeId}/products`, {
+          ...formValue,
+          price: Number(formValue.price),
+          diliveryPrice: Number(formValue.diliveryPrice),
+          collectionName: collection?.collectionName,
+        });
 
-      router.refresh();
-      router.push(`/${params.storeId}/products`);
-      toast.success("Product created");
-    } catch (error) {
-      toast.error("Something went wrong");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+        router.refresh();
+        router.push(`/${params.storeId}/products`);
+        toast.success("Product created");
+      } catch (error) {
+        toast.error("Something went wrong");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [params.productId, params.storeId]
+  );
 
   return (
     <>

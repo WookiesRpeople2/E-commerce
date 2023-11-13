@@ -120,7 +120,7 @@ export const AuthForm = () => {
                 href={"/signup"}
                 className="text-blue-800 underline text-sm"
               >
-                Don't have an account sign up
+                Dont have an account sign up
               </Link>
             </div>
           </form>

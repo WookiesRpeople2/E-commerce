@@ -37,18 +37,21 @@ export const SettingsForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = useCallback(async (data: TypeOfFormSchema) => {
-    try {
-      setIsLoading(true);
-      await axios.patch(`/api/stores/${params.storeId}/settings`, data);
-      router.refresh();
-      toast.success("Store name succsessfully update");
-    } catch (error) {
-      toast.error("an Error has occured");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const onSubmit = useCallback(
+    async (data: TypeOfFormSchema) => {
+      try {
+        setIsLoading(true);
+        await axios.patch(`/api/stores/${params.storeId}/settings`, data);
+        router.refresh();
+        toast.success("Store name succsessfully update");
+      } catch (error) {
+        toast.error("an Error has occured");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [params.storeId]
+  );
 
   const onDelete = useCallback(async () => {
     try {
@@ -61,7 +64,7 @@ export const SettingsForm = () => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [params.storeId]);
 
   return (
     <>

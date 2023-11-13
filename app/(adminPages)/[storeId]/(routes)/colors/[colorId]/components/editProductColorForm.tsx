@@ -61,23 +61,26 @@ export const EditProductColorForm: React.FC<EditProductColorFormProps> = ({
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = useCallback(async (formValue: TypeOfFormSchema) => {
-    try {
-      setIsLoading(true);
-      await axios.patch(
-        `/api/stores/${params.storeId}/colors/${params.colorId}`,
-        formValue
-      );
-      toast.success("Color Updated");
+  const onSubmit = useCallback(
+    async (formValue: TypeOfFormSchema) => {
+      try {
+        setIsLoading(true);
+        await axios.patch(
+          `/api/stores/${params.storeId}/colors/${params.colorId}`,
+          formValue
+        );
+        toast.success("Color Updated");
 
-      router.refresh();
-      router.push(`/${params.storeId}/colors`);
-    } catch (error) {
-      toast.error("Something went wrong");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+        router.refresh();
+        router.push(`/${params.storeId}/colors`);
+      } catch (error) {
+        toast.error("Something went wrong");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [params.colorId, params.storeId]
+  );
 
   const onDelete = useCallback(async () => {
     try {
@@ -94,7 +97,7 @@ export const EditProductColorForm: React.FC<EditProductColorFormProps> = ({
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [params.colorId, params.storeId]);
 
   return (
     <>
