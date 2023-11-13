@@ -37,7 +37,10 @@ export async function POST(
   }
 }
 
-export async function GET({ params }: { params: { storeId: string } }) {
+export async function GET(
+  req: Request,
+  { params }: { params: { storeId: string } }
+) {
   try {
     const sizes = await prismadb.productSize.findMany({
       where: {
