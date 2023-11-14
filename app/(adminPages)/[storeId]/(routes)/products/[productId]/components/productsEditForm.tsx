@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -24,7 +25,6 @@ import { Collection, Product, ProductColor, ProductSize } from "@prisma/client";
 import { ColorsButton } from "@/components/customUi/colorsButton";
 import { Combobox } from "@/components/customUi/combobox";
 import { SizesButton } from "@/components/customUi/sizesButton";
-import { FeaturedCheckBox } from "@/components/customUi/featuredCheckBox";
 
 const formSchema = z.object({
   productName: z.string().min(1),
@@ -34,6 +34,7 @@ const formSchema = z.object({
   featured: z.boolean().optional(),
   price: z.string().min(1),
   diliveryPrice: z.string().min(1),
+  quantity: z.string().min(1),
   collectionName: z.string().optional().nullable(),
 });
 
@@ -59,16 +60,15 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
       productImages: product?.productImages,
       colors: product?.colors,
       sizes: product?.sizes,
-      featured: product?.featured,
       price: String(product?.price),
       diliveryPrice: String(product?.diliveryPrice),
+      quantity: String(product?.quantity),
       collectionName: product?.collectionName,
     },
   });
   const params = useParams();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("");
 
   const onSubmit = useCallback(
     async (formValue: TypeOfFormSchema) => {
@@ -84,6 +84,7 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
             ...formValue,
             price: Number(formValue.price),
             diliveryPrice: Number(formValue.diliveryPrice),
+            quantity: Number(formValue.quantity),
             collectionName: collection?.collectionName
               ? collection.collectionName
               : null,
@@ -229,22 +230,11 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
                       />
                     </div>
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="featured"
-              render={({ field }) => (
-                <FormItem className="w-80">
-                  <FormControl>
-                    <FeaturedCheckBox
-                      check={field.value}
-                      onCheckChange={field.onChange}
-                    />
-                  </FormControl>
+                  <FormDescription>
+                    If you do not select a collection this product will be
+                    placed on the home page of the store, you can edit the
+                    product to be on the homestore by de-selecting the selection
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -264,6 +254,20 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
                       }
                       onRemoveValue={() => field.onChange([])}
                     />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="quantity"
+              render={({ field }) => (
+                <FormItem className="w-80">
+                  <FormLabel>Quantity</FormLabel>
+                  <FormControl>
+                    <Input placeholder="20" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

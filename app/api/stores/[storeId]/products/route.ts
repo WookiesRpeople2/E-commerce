@@ -13,7 +13,7 @@ export async function POST(
       productImages,
       colors,
       sizes,
-      featured,
+      quantity,
       price,
       diliveryPrice,
       collectionName,
@@ -43,6 +43,9 @@ export async function POST(
     if (!diliveryPrice) {
       return new NextResponse("Delevery price is required", { status: 400 });
     }
+    if (!quantity) {
+      return new NextResponse("Quantity is required", { status: 400 });
+    }
     if (!params.storeId) {
       return new NextResponse("storeId is required");
     }
@@ -53,7 +56,7 @@ export async function POST(
         productImages,
         colors,
         sizes,
-        featured,
+        quantity,
         price,
         diliveryPrice,
         collectionName,

@@ -26,7 +26,7 @@ export const SizesButton: React.FC<SizesButtonProps> = ({
 
   return (
     <div className="flex flex-wrap gap-2">
-      {sizes &&
+      {sizes && sizes.length > 0 ? (
         sizes.map((size) => (
           <Button
             type="button"
@@ -41,7 +41,12 @@ export const SizesButton: React.FC<SizesButtonProps> = ({
               <span className="text-sm">{size.size}</span>
             </div>
           </Button>
-        ))}
+        ))
+      ) : (
+        <div className="text-muted-foreground text-sm">
+          No Sizes Found Please create some
+        </div>
+      )}
     </div>
   );
 };

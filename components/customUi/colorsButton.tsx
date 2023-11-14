@@ -27,7 +27,7 @@ export const ColorsButton: React.FC<ColorsPreviewProps> = ({
 
   return (
     <div className="flex flex-wrap gap-2">
-      {colorNames &&
+      {colorNames && colorNames.length > 0 ? (
         colorNames.map((colorName) => (
           <Button
             type="button"
@@ -46,7 +46,12 @@ export const ColorsButton: React.FC<ColorsPreviewProps> = ({
               <span className="text-sm">{colorName.color}</span>
             </div>
           </Button>
-        ))}
+        ))
+      ) : (
+        <div className="text-muted-foreground text-sm">
+          No colors found please create some
+        </div>
+      )}
     </div>
   );
 };

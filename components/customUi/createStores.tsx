@@ -1,9 +1,6 @@
 "use client";
 
 import { Store } from "@prisma/client";
-import { PlusCircle } from "lucide-react";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
 import { StoreCombobox } from "./storeCombobox";
 
 type CreateStoreProps = {

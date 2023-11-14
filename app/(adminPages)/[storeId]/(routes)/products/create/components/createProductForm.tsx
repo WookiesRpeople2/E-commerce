@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -31,9 +32,9 @@ const formSchema = z.object({
   productImages: z.array(z.string()).min(1),
   colors: z.array(z.string()).min(1),
   sizes: z.array(z.string()).min(1),
-  featured: z.boolean().optional(),
   price: z.string().min(1),
   diliveryPrice: z.string().min(1),
+  quantity: z.string().min(1),
   collectionName: z.string().optional().nullable(),
 });
 
@@ -57,16 +58,15 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
       productImages: [],
       colors: [],
       sizes: [],
-      featured: false,
       price: "",
       diliveryPrice: "",
+      quantity: "",
       collectionName: "",
     },
   });
   const params = useParams();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [value, setValue] = useState("");
 
   const onSubmit = useCallback(
     async (formValue: TypeOfFormSchema) => {
@@ -80,6 +80,7 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
           ...formValue,
           price: Number(formValue.price),
           diliveryPrice: Number(formValue.diliveryPrice),
+          quantity: Number(formValue.quantity),
           collectionName: collection?.collectionName,
         });
 
@@ -204,22 +205,10 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
                       />
                     </div>
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="featured"
-              render={({ field }) => (
-                <FormItem className="w-80">
-                  <FormControl>
-                    <FeaturedCheckBox
-                      check={field.value}
-                      onCheckChange={field.onChange}
-                    />
-                  </FormControl>
+                  <FormDescription>
+                    If you do not select a collection this product will be
+                    placed on the home page of the store
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -244,6 +233,21 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="quantity"
+              render={({ field }) => (
+                <FormItem className="w-80">
+                  <FormLabel>Quantity</FormLabel>
+                  <FormControl>
+                    <Input placeholder="20" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <div className="col-span-3">
               <div className="flex justify-start">
                 <Button disabled={isLoading} type="submit">

@@ -42,11 +42,11 @@ export const StoreCombobox: React.FC<StoreComboboxProps> = ({
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(store);
+  // const [selectedValue, setSelectedValue] = useState(store);
 
   const onSelect = (currentValue: string) => {
     onChange(currentValue);
-    setSelectedValue(currentValue === selectedValue ? store : currentValue);
+    // setSelectedValue(currentValue === selectedValue ? store : currentValue);
     setIsOpen(false);
   };
   return (
@@ -56,8 +56,7 @@ export const StoreCombobox: React.FC<StoreComboboxProps> = ({
           <PopoverTrigger asChild>
             <Button variant="outline" role="combobox" aria-expanded={isOpen}>
               <Shirt className="mr-auto h-4 w-4" />
-              {selectedValue &&
-                values.find((value) => value.name === selectedValue)?.label}
+              <span>{store}</span>
               <ChevronDown className="ml-auto h-4 w-4" />
             </Button>
           </PopoverTrigger>
@@ -76,7 +75,7 @@ export const StoreCombobox: React.FC<StoreComboboxProps> = ({
                   <MousePointerSquare
                     className={cn(
                       "mr-4 h-4 w-4",
-                      selectedValue === value.name ? "opacity-100" : "opacity-0"
+                      store === value.name ? "opacity-100" : "opacity-0"
                     )}
                   />
                   {value.label}

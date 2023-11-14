@@ -80,7 +80,12 @@ export const UploadImage: React.FC<UploadImageProps> = ({
           };
           return (
             <div className="space-x-4">
-              <Button className="mt-5" disabled={disabled} onClick={onClick}>
+              <Button
+                type="button"
+                className="mt-5"
+                disabled={disabled}
+                onClick={onClick}
+              >
                 <FileImage className="mr-auto w-4 h-4" />
                 Upload an Image
               </Button>

@@ -80,9 +80,9 @@ model Product {
   productImages  String[]
   colors         String[]
   sizes          String[]
-  featured       Boolean     @default(false)
   price          Float
   diliveryPrice  Float
+  quantity       Int
   storeId        String
   store          Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)
   collectionName String?
