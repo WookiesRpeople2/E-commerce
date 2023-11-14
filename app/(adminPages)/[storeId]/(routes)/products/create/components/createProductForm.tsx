@@ -25,7 +25,6 @@ import { Collection, ProductColor, ProductSize } from "@prisma/client";
 import { ColorsButton } from "@/components/customUi/colorsButton";
 import { Combobox } from "@/components/customUi/combobox";
 import { SizesButton } from "@/components/customUi/sizesButton";
-import { FeaturedCheckBox } from "@/components/customUi/featuredCheckBox";
 
 const formSchema = z.object({
   productName: z.string().min(1),
