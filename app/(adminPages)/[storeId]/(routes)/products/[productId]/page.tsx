@@ -32,6 +32,12 @@ export default async function ProductsEditPage({
     },
   });
 
+  const groupes = await prismadb.productGroup.findMany({
+    where: {
+      storeId: params.storeId,
+    },
+  });
+
   return (
     <>
       <ProductsEditForm
@@ -39,6 +45,7 @@ export default async function ProductsEditPage({
         collections={collections}
         colors={colors}
         sizes={sizes}
+        groupes={groupes}
       />
     </>
   );

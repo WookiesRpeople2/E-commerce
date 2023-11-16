@@ -23,7 +23,7 @@ export const ProductsHomeClient: React.FC<ProductsHomeClientProps> = ({
   return (
     <div className="px-4">
       <Heading title="Products" discreption="See your products in the store" />
-      <div className="container max-w-4xl py-10">
+      <div className="container max-w-5xl py-10">
         <DataTable
           onNew={onNew}
           filter="productName"

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { FileImage, Trash } from "lucide-react";
 import { CustomCard } from "@/components/customUi/customCard";
 import Image from "next/image";
+import { ImagePreview } from "./imagePreview";
 
 interface UploadImageProps {
   field?: string;
@@ -39,36 +40,15 @@ export const UploadImage: React.FC<UploadImageProps> = ({
   return (
     <>
       {field && (
-        <div className="flex space-x-4">
-          <CustomCard className="relative w-72 h-72">
-            <div className="w-full">
-              <Image
-                fill
-                src={field}
-                alt="Profile image"
-                className="object-cover w-full h-full"
-              />
-            </div>
-          </CustomCard>
+        <div className="flex space-x-4 ">
+          <ImagePreview key={field} image={field} className="w-60 h-60" />
         </div>
       )}
 
       {fieldArray && fieldArray.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {fieldArray.map((field, fieldIndex) => (
-            <CustomCard
-              key={fieldIndex}
-              className="relative aspect-w-1 aspect-h-1"
-            >
-              <div className="w-full h-full">
-                <Image
-                  fill
-                  src={field}
-                  alt="Profile image"
-                  className="object-cover w-full h-full"
-                />
-              </div>
-            </CustomCard>
+            <ImagePreview key={fieldIndex} image={field} />
           ))}
         </div>
       )}

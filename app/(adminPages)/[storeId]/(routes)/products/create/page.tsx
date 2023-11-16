@@ -24,12 +24,19 @@ export default async function ColorsCreatePage({
     },
   });
 
+  const groupes = await prismadb.productGroup.findMany({
+    where: {
+      storeId: params.storeId,
+    },
+  });
+
   return (
     <>
       <CreateProductForm
         collections={collections}
         colors={colors}
         sizes={sizes}
+        groupes={groupes}
       />
     </>
   );

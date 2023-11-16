@@ -43,17 +43,19 @@ model Account {
 }
 
 model Store {
-  id         String         @id @default(uuid())
-  storeName  String
-  status     String         @default("open")
-  userId     String
-  user       User           @relation(fields: [userId], references: [id])
-  createdAt  DateTime       @default(now())
-  updatedAt  DateTime       @updatedAt
-  collection Collection[]
-  products   Product[]
-  size       ProductSize[]
-  color      ProductColor[]
+  id           String         @id @default(uuid())
+  storeName    String
+  status       String         @default("open")
+  userId       String
+  user         User           @relation(fields: [userId], references: [id])
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  collection   Collection[]
+  products     Product[]
+  size         ProductSize[]
+  color        ProductColor[]
+  payments     Payment[]
+  ProductGroup ProductGroup[]
 
   @@index([userId])
 }
@@ -75,20 +77,22 @@ model Collection {
 }
 
 model Product {
-  id             String      @id @default(uuid())
+  id             String         @id @default(uuid())
   productName    String
   productImages  String[]
-  colors         String[]
-  sizes          String[]
+  colors         String
+  sizes          String
   price          Float
   diliveryPrice  Float
   quantity       Int
+  groupe         String
   storeId        String
-  store          Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  store          Store          @relation(fields: [storeId], references: [id], onDelete: Cascade)
   collectionName String?
-  collection     Collection? @relation(fields: [collectionName], references: [collectionName], onDelete: Cascade)
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
+  collection     Collection?    @relation(fields: [collectionName], references: [collectionName], onDelete: Cascade)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  paymentItems   PaymentItems[]
 
   @@index([storeId])
 }
@@ -113,4 +117,38 @@ model ProductColor {
   updatedAt DateTime @updatedAt
 
   @@index([storeId])
+}
+
+model ProductGroup {
+  id        String   @id @default(uuid())
+  groupe    String
+  storeId   String
+  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storeId])
+}
+
+model Payment {
+  id           String         @id @default(uuid())
+  storeId      String
+  isPaid       Boolean        @default(false)
+  phone        String
+  address      String
+  quantity     Int
+  store        Store          @relation(fields: [storeId], references: [id])
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  paymentItems PaymentItems[]
+
+  @@index([storeId])
+}
+
+model PaymentItems {
+  id        String  @id @default(uuid())
+  paymentId String
+  payment   Payment @relation(fields: [paymentId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
 }

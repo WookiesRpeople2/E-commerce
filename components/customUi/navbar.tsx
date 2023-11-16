@@ -40,7 +40,7 @@ export const Navbar: React.FC<NavbarProps> = ({ stores }) => {
     },
     {
       link: `/${params.storeId}/collections`,
-      label: "collection's",
+      label: "collections",
       clicked: pathname === `/${params.storeId}/collections`,
     },
     {
@@ -54,9 +54,19 @@ export const Navbar: React.FC<NavbarProps> = ({ stores }) => {
       clicked: pathname === `/${params.storeId}/sizes`,
     },
     {
+      link: `/${params.storeId}/groupes`,
+      label: "groupes",
+      clicked: pathname === `/${params.storeId}/groupes`,
+    },
+    {
       link: `/${params.storeId}/products`,
-      label: "product's",
+      label: "products",
       clicked: pathname === `/${params.storeId}/products`,
+    },
+    {
+      link: `/${params.storeId}/payments`,
+      label: "payments",
+      clicked: pathname === `/${params.storeId}/payments`,
     },
     {
       link: `/${params.storeId}/settings`,

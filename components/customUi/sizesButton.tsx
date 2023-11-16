@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 
 type SizesButtonProps = {
   sizes: ProductSize[] | null;
-  value: string[];
-  onChange: (value: string[]) => void;
+  value: string;
+  onChange: (value: string) => void;
 };
 
 export const SizesButton: React.FC<SizesButtonProps> = ({
@@ -17,11 +17,7 @@ export const SizesButton: React.FC<SizesButtonProps> = ({
   onChange,
 }) => {
   const handleClickSize = (currentSize: string) => {
-    const newValue = value.includes(currentSize)
-      ? value.filter((size) => size !== currentSize)
-      : [...value, currentSize];
-
-    onChange(newValue);
+    onChange(currentSize);
   };
 
   return (

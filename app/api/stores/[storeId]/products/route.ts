@@ -16,6 +16,7 @@ export async function POST(
       quantity,
       price,
       diliveryPrice,
+      groupe,
       collectionName,
     } = await req.json();
 
@@ -32,7 +33,7 @@ export async function POST(
       return new NextResponse("Product images are required", { status: 400 });
     }
     if (!colors) {
-      return new NextResponse("Colors are required", { status: 400 });
+      return new NextResponse("Color is required", { status: 400 });
     }
     if (!sizes) {
       return new NextResponse("Sizes are required", { status: 400 });
@@ -45,6 +46,9 @@ export async function POST(
     }
     if (!quantity) {
       return new NextResponse("Quantity is required", { status: 400 });
+    }
+    if (!groupe) {
+      return new NextResponse("Groupe is required", { status: 400 });
     }
     if (!params.storeId) {
       return new NextResponse("storeId is required");
@@ -59,6 +63,7 @@ export async function POST(
         quantity,
         price,
         diliveryPrice,
+        groupe,
         collectionName,
         storeId: params.storeId,
       },

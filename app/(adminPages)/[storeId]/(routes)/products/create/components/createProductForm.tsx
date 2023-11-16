@@ -21,19 +21,26 @@ import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { UploadImage } from "@/components/customUi/uploadImage";
-import { Collection, ProductColor, ProductSize } from "@prisma/client";
+import {
+  Collection,
+  ProductColor,
+  ProductGroup,
+  ProductSize,
+} from "@prisma/client";
 import { ColorsButton } from "@/components/customUi/colorsButton";
 import { Combobox } from "@/components/customUi/combobox";
 import { SizesButton } from "@/components/customUi/sizesButton";
+import { Groupes } from "../../../groupes/components/columns";
 
 const formSchema = z.object({
   productName: z.string().min(1),
   productImages: z.array(z.string()).min(1),
-  colors: z.array(z.string()).min(1),
-  sizes: z.array(z.string()).min(1),
+  colors: z.string().min(1),
+  sizes: z.string().min(1),
   price: z.string().min(1),
   diliveryPrice: z.string().min(1),
   quantity: z.string().min(1),
+  groupe: z.string().min(1),
   collectionName: z.string().optional().nullable(),
 });
 
@@ -43,23 +50,26 @@ type CreateProductFormProps = {
   collections: Collection[] | null;
   colors: ProductColor[] | null;
   sizes: ProductSize[] | null;
+  groupes: ProductGroup[] | null;
 };
 
 export const CreateProductForm: React.FC<CreateProductFormProps> = ({
   collections,
   colors,
   sizes,
+  groupes,
 }) => {
   const form = useForm<TypeOfFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       productName: "",
       productImages: [],
-      colors: [],
-      sizes: [],
+      colors: "",
+      sizes: "",
       price: "",
       diliveryPrice: "",
       quantity: "",
+      groupe: "",
       collectionName: "",
     },
   });
@@ -241,6 +251,31 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
                   <FormLabel>Quantity</FormLabel>
                   <FormControl>
                     <Input placeholder="20" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="groupe"
+              render={({ field }) => (
+                <FormItem className="w-80">
+                  <FormLabel>Add a groupe</FormLabel>
+                  <FormControl>
+                    <div>
+                      <Combobox
+                        btnTitle="View Groupes"
+                        values={(groupes as ProductGroup[]).map(
+                          (collection) => ({
+                            name: collection.groupe.toLowerCase(),
+                            label: collection.groupe,
+                          })
+                        )}
+                        onChange={(value) => field.onChange(value)}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

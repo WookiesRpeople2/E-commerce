@@ -7,11 +7,12 @@ import { RowAction } from "./action";
 export type Products = {
   id: string;
   productName: string;
-  colors: string[];
-  sizes: string[];
+  colors: string;
+  sizes: string;
   price: number;
   diliveryPrice: number;
   quantity: number;
+  groupe: string;
   collectionName: string | null;
 };
 
@@ -22,21 +23,19 @@ export const columns: ColumnDef<Products>[] = [
   },
   {
     accessorKey: "colors",
-    header: () => <div className="text-xl">Colors</div>,
+    header: () => <div className="text-xl">Color</div>,
     cell: ({ row }) => {
-      const colors = row.getValue("colors") as [];
+      const color = row.getValue("colors") as string;
       return (
-        <div className="flex space-x-2">
-          {colors.map((color, colorIndex) => (
-            <ColorsCircle key={colorIndex} color={color} />
-          ))}
+        <div className="flex justify-center space-x-2">
+          <ColorsCircle color={color} />
         </div>
       );
     },
   },
   {
     accessorKey: "sizes",
-    header: () => <div className="text-xl">Sizes</div>,
+    header: () => <div className="text-xl">Size</div>,
   },
   {
     accessorKey: "price",
@@ -53,6 +52,13 @@ export const columns: ColumnDef<Products>[] = [
   {
     accessorKey: "collectionName",
     header: () => <div className="text-xl">Collection</div>,
+  },
+  {
+    accessorKey: "groupe",
+    header: () => <div className="text-xl">Groupe</div>,
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("groupe")}</div>
+    ),
   },
   {
     id: "actions",

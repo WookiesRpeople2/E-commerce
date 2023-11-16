@@ -27,7 +27,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   filter: string;
-  onNew: () => void;
+  onNew?: () => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -61,10 +61,12 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
 
-        <Button onClick={onNew}>
-          <Plus className="h-4 w-4" />
-          New
-        </Button>
+        {onNew && (
+          <Button onClick={onNew}>
+            <Plus className="h-4 w-4" />
+            New
+          </Button>
+        )}
       </div>
       <div className="rounded-md border">
         <Table>

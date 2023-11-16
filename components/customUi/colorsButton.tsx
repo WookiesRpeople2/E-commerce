@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils";
 
 type ColorsPreviewProps = {
   colorNames: ProductColor[] | null;
-  value: string[];
-  onChange: (value: string[]) => void;
+  value: string;
+  onChange: (value: string) => void;
 };
 
 export const ColorsButton: React.FC<ColorsPreviewProps> = ({
@@ -18,11 +18,7 @@ export const ColorsButton: React.FC<ColorsPreviewProps> = ({
   onChange,
 }) => {
   const handleClickColor = (currentColor: string) => {
-    const newValue = value.includes(currentColor)
-      ? value.filter((size) => size !== currentColor)
-      : [...value, currentColor];
-
-    onChange(newValue);
+    onChange(currentColor);
   };
 
   return (
