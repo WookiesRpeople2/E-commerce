@@ -62,7 +62,7 @@ model Store {
 
 model Collection {
   id              String    @id @default(uuid())
-  collectionName  String    @unique
+  collectionName  String
   collectionImage String
   userId          String
   user            User      @relation(fields: [userId], references: [id])
@@ -76,79 +76,79 @@ model Collection {
   @@index([userId])
 }
 
-model Product {
-  id             String         @id @default(uuid())
-  productName    String
-  productImages  String[]
-  colors         String
-  sizes          String
-  price          Float
-  diliveryPrice  Float
-  quantity       Int
-  groupe         String
-  storeId        String
-  store          Store          @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  collectionName String?
-  collection     Collection?    @relation(fields: [collectionName], references: [collectionName], onDelete: Cascade)
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  paymentItems   PaymentItems[]
-
-  @@index([storeId])
-}
-
 model ProductSize {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   size      String
   storeId   String
-  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  store     Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  product   Product[]
 
   @@index([storeId])
 }
 
 model ProductColor {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   color     String
   storeId   String
-  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  store     Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  product   Product[]
 
   @@index([storeId])
 }
 
 model ProductGroup {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   groupe    String
   storeId   String
-  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  store     Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  product   Product[]
+
+  @@index([storeId])
+}
+
+model Product {
+  id            String       @id @default(uuid())
+  productName   String
+  productImages String[]
+  colorId       String
+  productColor  ProductColor @relation(fields: [colorId], references: [id], onDelete: NoAction, onUpdate: Cascade)
+  sizeId        String
+  productSize   ProductSize  @relation(fields: [sizeId], references: [id], onDelete: NoAction, onUpdate: Cascade)
+  price         Float
+  diliveryPrice Float
+  quantity      Int
+  groupeId      String
+  groupe        ProductGroup @relation(fields: [groupeId], references: [id], onDelete: NoAction, onUpdate: Cascade)
+  storeId       String
+  store         Store        @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  collectionId  String?
+  collection    Collection?  @relation(fields: [collectionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  payment       Payment[]
 
   @@index([storeId])
 }
 
 model Payment {
-  id           String         @id @default(uuid())
-  storeId      String
-  isPaid       Boolean        @default(false)
-  phone        String
-  address      String
-  quantity     Int
-  store        Store          @relation(fields: [storeId], references: [id])
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  paymentItems PaymentItems[]
-
-  @@index([storeId])
-}
-
-model PaymentItems {
-  id        String  @id @default(uuid())
-  paymentId String
-  payment   Payment @relation(fields: [paymentId], references: [id])
+  id        String   @id @default(uuid())
+  isPaid    Boolean  @default(false)
+  phone     String
+  address   String
+  quantity  Int
+  storeId   String
+  store     Store    @relation(fields: [storeId], references: [id])
   productId String
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+  @@index([storeId])
 }

@@ -26,11 +26,11 @@ export const SizesButton: React.FC<SizesButtonProps> = ({
         sizes.map((size) => (
           <Button
             type="button"
-            variant={value.includes(size.size) ? "default" : "secondary"}
+            variant={value.includes(size.id) ? "default" : "secondary"}
             className={cn(
-              value.includes(size.size) ? "text-white" : "text-muted-foreground"
+              value.includes(size.id) ? "text-white" : "text-muted-foreground"
             )}
-            onClick={() => handleClickSize(size.size)}
+            onClick={() => handleClickSize(size.id)}
             key={size.id}
           >
             <div className="px-1 flex justify-center items-center space-x-1">

@@ -11,6 +11,9 @@ export type Payments = {
   isPaid: boolean;
   quantity: number;
   createdAt: Date;
+  productName: string;
+  productImages: string[];
+  price: number;
 };
 
 export const columns: ColumnDef<Payments>[] = [

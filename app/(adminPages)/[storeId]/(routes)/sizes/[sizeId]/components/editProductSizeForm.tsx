@@ -73,8 +73,8 @@ export const EditProductSizeForm: React.FC<EditProductSizeFormProps> = ({
       router.refresh();
       router.push(`/${params.storeId}/sizes`);
       toast.success("Size Deleted");
-    } catch (error) {
-      toast.error("Something went wrong");
+    } catch (error: any) {
+      toast.error(error.response.data);
     } finally {
       setIsLoading(false);
     }

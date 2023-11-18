@@ -36,8 +36,8 @@ import { AlerteModel } from "@/components/customUi/alerteModel";
 const formSchema = z.object({
   productName: z.string().min(1),
   productImages: z.array(z.string()).min(1),
-  colors: z.string().min(1),
-  sizes: z.string().min(1),
+  colorId: z.string().min(1),
+  sizeId: z.string().min(1),
   featured: z.boolean().optional(),
   price: z.string().min(1),
   diliveryPrice: z.string().min(1),
@@ -66,15 +66,18 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
   const form = useForm<TypeOfFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      productName: product?.productName,
-      productImages: product?.productImages,
-      colors: product?.colors,
-      sizes: product?.sizes,
+      ...product,
       price: String(product?.price),
       diliveryPrice: String(product?.diliveryPrice),
       quantity: String(product?.quantity),
-      groupe: product?.groupe,
-      collectionName: product?.collectionName,
+      colorId: product?.colorId,
+
+      groupe: groupes?.find((groupe) => groupe.id === product?.groupeId)
+        ?.groupe,
+
+      collectionName: collections?.find(
+        (collection) => collection.id === product?.collectionId
+      )?.collectionName,
     },
   });
   const params = useParams();
@@ -86,7 +89,12 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
       const collection = collections?.find(
         (collection) =>
           collection.collectionName.toLowerCase() === formValue.collectionName
-      );
+      )?.id;
+
+      const groupeId = groupes?.find(
+        (groupe) => groupe.groupe.toLowerCase() === formValue.groupe
+      )?.id;
+
       try {
         setIsLoading(true);
         await axios.patch(
@@ -96,9 +104,8 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
             price: Number(formValue.price),
             diliveryPrice: Number(formValue.diliveryPrice),
             quantity: Number(formValue.quantity),
-            collectionName: collection?.collectionName
-              ? collection.collectionName
-              : null,
+            groupeId: groupeId ? groupeId : product?.groupeId,
+            collectionId: collection ? collection : null,
           }
         );
 
@@ -110,8 +117,6 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
       } finally {
         setIsLoading(false);
       }
-
-      console.log(formValue.colors);
     },
     [params.productId, params.storeId]
   );
@@ -160,7 +165,7 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
 
             <FormField
               control={form.control}
-              name="colors"
+              name="colorId"
               render={({ field }) => (
                 <FormItem className="w-80">
                   <FormLabel>Colors</FormLabel>
@@ -178,7 +183,7 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
 
             <FormField
               control={form.control}
-              name="sizes"
+              name="sizeId"
               render={({ field }) => (
                 <FormItem className="w-80">
                   <FormLabel>Size:</FormLabel>
@@ -301,6 +306,7 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
                           name: groupe.groupe.toLowerCase(),
                           label: groupe.groupe,
                         }))}
+                        exsistingValue={field.value?.toLowerCase() as string}
                         onChange={(value) => field.onChange(value)}
                       />
                     </div>

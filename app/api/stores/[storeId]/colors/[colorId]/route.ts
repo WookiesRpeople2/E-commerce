@@ -61,6 +61,20 @@ export async function DELETE(
       return new NextResponse("Collection Id is required", { status: 400 });
     }
 
+    const product = await prismadb.product.findFirst({
+      where: {
+        storeId: params.storeId,
+        colorId: params.colorId,
+      },
+    });
+
+    if (product) {
+      return new NextResponse(
+        "Please make sure there are no products with this color",
+        { status: 400 }
+      );
+    }
+
     const colorDelete = await prismadb.productColor.delete({
       where: {
         id: params.colorId,

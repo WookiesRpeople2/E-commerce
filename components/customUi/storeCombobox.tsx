@@ -12,7 +12,6 @@ import {
   MousePointerSquare,
   PlusCircle,
   Shirt,
-  Trash,
 } from "lucide-react";
 import {
   Command,

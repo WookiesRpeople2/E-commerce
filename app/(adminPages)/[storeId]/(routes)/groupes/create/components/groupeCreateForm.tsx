@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -44,7 +45,7 @@ export const GroupeCreateForm = () => {
         await axios.post(`/api/stores/${params.storeId}/groupes/`, formValue);
         router.refresh();
         router.push(`/${params.storeId}/groupes`);
-        toast.success("Collection Created");
+        toast.success("Groupe Created");
       } catch (error) {
         toast.error("Something went wrong");
       } finally {
@@ -57,7 +58,7 @@ export const GroupeCreateForm = () => {
   return (
     <>
       <div className="px-4">
-        <Heading title="Create" discreption="Create a collection" />
+        <Heading title="Create" discreption="Create a Groupe" />
       </div>
       <div className="flex justify-center items-center">
         <Form {...form}>
@@ -71,6 +72,11 @@ export const GroupeCreateForm = () => {
                   <FormControl>
                     <Input placeholder="Jordons" {...field} />
                   </FormControl>
+                  <FormDescription>
+                    By making a new groupe you will have ways to link products
+                    together. like a red and white pair of shoes that are the
+                    same make and model but that are just in a differnt color
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

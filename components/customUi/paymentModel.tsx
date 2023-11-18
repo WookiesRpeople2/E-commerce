@@ -12,10 +12,10 @@ import {
 import { ImagePreview } from "./imagePreview";
 
 type PaymentModelProps = {
-  productName: string;
-  productImages: string[];
-  price: string;
-  quantity: string;
+  productName?: string;
+  productImages?: string[];
+  price?: string;
+  quantity?: string;
   address: string;
   phone: string;
   open: boolean;
@@ -52,29 +52,33 @@ export const PaymentModel: React.FC<PaymentModelProps> = ({
             <h1 className="text-sm text-muted-foreground">Price:</h1>
             <h2>{price}</h2>
           </div>
-          <div>
-            <h1 className="text-sm text-muted-foreground">Product Images:</h1>
-            <div className="flex">
-              {productImages.map((image, imageField) => (
-                <ImagePreview key={imageField} image={image} />
-              ))}
+
+          {productImages && (
+            <div>
+              <h1 className="text-sm text-muted-foreground">Product Images:</h1>
+              <div className="flex">
+                {productImages.map((image, index) => (
+                  <ImagePreview key={index} image={image} />
+                ))}
+              </div>
             </div>
-          </div>
-          <div>
-            <h1 className="text-sm text-muted-foreground">Quantity ordered:</h1>
-            <h2>{quantity}</h2>
-          </div>
-          <div>
-            <h1 className="text-sm text-muted-foreground">
-              Adress of where to be delivered:
-            </h1>
-            <h2>{address}</h2>
-          </div>
-          <div>
-            <h1 className="text-sm text-muted-foreground">Phone Number:</h1>
-            <h2>{phone}</h2>
-          </div>
+          )}
         </div>
+        <div>
+          <h1 className="text-sm text-muted-foreground">Quantity ordered:</h1>
+          <h2>{quantity}</h2>
+        </div>
+        <div>
+          <h1 className="text-sm text-muted-foreground">
+            Adress of where to be delivered:
+          </h1>
+          <h2>{address}</h2>
+        </div>
+        <div>
+          <h1 className="text-sm text-muted-foreground">Phone Number:</h1>
+          <h2>{phone}</h2>
+        </div>
+
         <DialogFooter>
           <Button variant="outline" onClick={onClose}>
             Close

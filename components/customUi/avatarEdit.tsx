@@ -3,6 +3,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Pencil } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 type AvatarEdit = {
   field: string;
@@ -10,13 +11,13 @@ type AvatarEdit = {
 };
 
 export const AvatarEdit: React.FC<AvatarEdit> = ({ field, onClick }) => {
+  const { data: session } = useSession();
+  const initial = session?.user?.email && session.user.email[0];
   return (
     <div className="relative w-80 h-80">
       <Avatar className="w-full h-full z-0">
         <AvatarImage src={field || ""} />
-        <AvatarFallback>
-          <Skeleton />
-        </AvatarFallback>
+        <AvatarFallback className="text-4xl">{initial}</AvatarFallback>
       </Avatar>
 
       <div

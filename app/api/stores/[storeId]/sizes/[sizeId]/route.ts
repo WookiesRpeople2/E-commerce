@@ -61,6 +61,20 @@ export async function DELETE(
       return new NextResponse("SIZEID Id is required", { status: 400 });
     }
 
+    const product = await prismadb.product.findFirst({
+      where: {
+        storeId: params.storeId,
+        sizeId: params.sizeId,
+      },
+    });
+
+    if (product) {
+      return new NextResponse(
+        "Please make sure there are no products with this size",
+        { status: 400 }
+      );
+    }
+
     const sizeDelete = await prismadb.productSize.delete({
       where: {
         id: params.sizeId,

@@ -25,7 +25,7 @@ export const GroupeClient: React.FC<GroupeClientProps> = ({ groupes }) => {
       <div className="px-4">
         <Heading
           title="Groupes"
-          discreption="you can link products here together in a groupe, like a shoe that has the same name and brandd you can make a groupe called Jordon for example and it will hold both shoes"
+          discreption="Link products together in a groupe"
         />
       </div>
       <div className="container max-w-3xl py-10">

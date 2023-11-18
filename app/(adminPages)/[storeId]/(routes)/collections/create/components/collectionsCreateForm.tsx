@@ -50,8 +50,8 @@ export const CollectionCreateForm = () => {
         router.refresh();
         router.push(`/${params.storeId}/collections`);
         toast.success("Collection Created");
-      } catch (error) {
-        toast.error("Something went wrong");
+      } catch (error: any) {
+        toast.error(error);
       } finally {
         setIsLoading(false);
       }

@@ -43,8 +43,9 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
         `/api/stores/${params.storeId}/collections/${data.id}`
       );
       deleteCollection(data.id);
+      router.refresh();
       toast.success("Collection Deleted");
-    } catch (error) {
+    } catch (error: any) {
       toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
@@ -55,7 +56,7 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
   return (
     <>
       <AlerteModel
-        description="this action will delete this collection, it can not be undone IMPORTANT: THIS WILL ALSO DELETE THE PRODUCTS FROM THIS COLLECTION"
+        description="this action will delete this collection, it can not be undone IMPORTANT: THIS WILL ALSO DELETE THIS COLLECTIONS FROM THE PRODUCTS THAT HAVE IT SELECTED"
         disabled={isLoading}
         onContinue={onDelete}
         onCancel={() => setOpen(false)}

@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import { ColorsCircle } from "@/components/customUi/colorsCircle";
 import { ProductColor } from "@prisma/client";
 import { cn } from "@/lib/utils";
@@ -27,13 +26,13 @@ export const ColorsButton: React.FC<ColorsPreviewProps> = ({
         colorNames.map((colorName) => (
           <Button
             type="button"
-            variant={value.includes(colorName.color) ? "default" : "secondary"}
+            variant={value.includes(colorName.id) ? "default" : "secondary"}
             className={cn(
-              value.includes(colorName.color)
+              value.includes(colorName.id)
                 ? "text-white"
                 : "text-muted-foreground"
             )}
-            onClick={() => handleClickColor(colorName.color)}
+            onClick={() => handleClickColor(colorName.id)}
             key={colorName.id}
           >
             <div className="px-1 flex justify-center items-center space-x-1">

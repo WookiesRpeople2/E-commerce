@@ -11,13 +11,13 @@ export async function PATCH(
     const {
       productName,
       productImages,
-      colors,
-      sizes,
+      colorId,
+      sizeId,
       quantity,
       price,
       diliveryPrice,
-      groupe,
-      collectionName,
+      groupeId,
+      collectionId,
     } = await req.json();
 
     const session = await getServerSession(authOptions);
@@ -32,10 +32,10 @@ export async function PATCH(
     if (!productImages) {
       return new NextResponse("Product images are required", { status: 400 });
     }
-    if (!colors) {
+    if (!colorId) {
       return new NextResponse("Color is required", { status: 400 });
     }
-    if (!sizes) {
+    if (!sizeId) {
       return new NextResponse("Sizes are required", { status: 400 });
     }
     if (!price) {
@@ -47,7 +47,7 @@ export async function PATCH(
     if (!quantity) {
       return new NextResponse("Quantity is required", { status: 400 });
     }
-    if (!groupe) {
+    if (!groupeId) {
       return new NextResponse("Groupe is required", { status: 400 });
     }
     if (!params.storeId) {
@@ -65,13 +65,13 @@ export async function PATCH(
       data: {
         productName,
         productImages,
-        colors,
-        sizes,
+        colorId,
+        sizeId,
         quantity,
         price,
         diliveryPrice,
-        groupe,
-        collectionName,
+        groupeId,
+        collectionId,
       },
     });
 

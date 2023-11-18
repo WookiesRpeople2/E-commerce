@@ -24,6 +24,18 @@ export async function PATCH(
       return new NextResponse("Store name is required", { status: 400 });
     }
 
+    const payments = await prismadb.payment.findMany({
+      where: {
+        storeId: params.storeId,
+      },
+    });
+
+    if (payments) {
+      return new NextResponse(
+        "Please make sure all payments have been processed before delting this store"
+      );
+    }
+
     const store = await prismadb.store.updateMany({
       where: {
         id: params.storeId,

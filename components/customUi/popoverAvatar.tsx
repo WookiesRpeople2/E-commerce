@@ -24,15 +24,15 @@ export const PopoverAvatar = () => {
   const { data: session } = useSession();
   const params = useParams();
 
+  const initial = session?.user.email && session.user.email[0];
+
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger className="cursor-pointer" asChild>
           <Avatar>
             <AvatarImage src={session?.user.image || ""} />
-            <AvatarFallback>
-              <Skeleton className="h-12 w-12 rounded-full" />
-            </AvatarFallback>
+            <AvatarFallback>{initial}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent>

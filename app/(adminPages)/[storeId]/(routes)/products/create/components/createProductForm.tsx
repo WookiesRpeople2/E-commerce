@@ -35,8 +35,8 @@ import { Groupes } from "../../../groupes/components/columns";
 const formSchema = z.object({
   productName: z.string().min(1),
   productImages: z.array(z.string()).min(1),
-  colors: z.string().min(1),
-  sizes: z.string().min(1),
+  colorId: z.string().min(1),
+  sizeId: z.string().min(1),
   price: z.string().min(1),
   diliveryPrice: z.string().min(1),
   quantity: z.string().min(1),
@@ -64,8 +64,8 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
     defaultValues: {
       productName: "",
       productImages: [],
-      colors: "",
-      sizes: "",
+      colorId: "",
+      sizeId: "",
       price: "",
       diliveryPrice: "",
       quantity: "",
@@ -79,10 +79,15 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
 
   const onSubmit = useCallback(
     async (formValue: TypeOfFormSchema) => {
-      const collection = collections?.find(
+      const collectionId = collections?.find(
         (collection) =>
           collection.collectionName.toLowerCase() === formValue.collectionName
-      );
+      )?.id;
+
+      const groupeId = groupes?.find(
+        (groupe) => groupe.groupe.toLowerCase() === formValue.groupe
+      )?.id;
+
       try {
         setIsLoading(true);
         await axios.post(`/api/stores/${params.storeId}/products`, {
@@ -90,7 +95,8 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
           price: Number(formValue.price),
           diliveryPrice: Number(formValue.diliveryPrice),
           quantity: Number(formValue.quantity),
-          collectionName: collection?.collectionName,
+          groupeId,
+          collectionId,
         });
 
         router.refresh();
@@ -132,7 +138,7 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
 
             <FormField
               control={form.control}
-              name="colors"
+              name="colorId"
               render={({ field }) => (
                 <FormItem className="w-80">
                   <FormLabel>Colors</FormLabel>
@@ -150,7 +156,7 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
 
             <FormField
               control={form.control}
-              name="sizes"
+              name="sizeId"
               render={({ field }) => (
                 <FormItem className="w-80">
                   <FormLabel>Size:</FormLabel>

@@ -22,12 +22,14 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import { Combobox } from "@/components/customUi/combobox";
+import { ProductGroup } from "@prisma/client";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   filter: string;
   onNew?: () => void;
+  values?: ProductGroup[];
 }
 
 export function DataTable<TData, TValue>({
@@ -35,6 +37,7 @@ export function DataTable<TData, TValue>({
   data,
   filter,
   onNew,
+  values,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
@@ -60,6 +63,19 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+
+        {values && (
+          <Combobox
+            btnTitle="Search by groupes"
+            values={(values as ProductGroup[]).map((value) => ({
+              name: value.groupe.toLowerCase(),
+              label: value.groupe,
+            }))}
+            onChange={(value) =>
+              table.getColumn("groupe")?.setFilterValue(value)
+            }
+          />
+        )}
 
         {onNew && (
           <Button onClick={onNew}>

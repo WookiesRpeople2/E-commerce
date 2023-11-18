@@ -92,8 +92,8 @@ export const EditProductColorForm: React.FC<EditProductColorFormProps> = ({
       router.refresh();
       router.push(`/${params.storeId}/colors`);
       toast.success("Color Deleted");
-    } catch (error) {
-      toast.error("Something went wrong");
+    } catch (error: any) {
+      toast.error(error.response.data);
     } finally {
       setIsLoading(false);
     }

@@ -2,11 +2,7 @@
 
 import { CldUploadWidget } from "next-cloudinary";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { AvatarEdit } from "@/components/customUi/avatarEdit";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Skeleton } from "../ui/skeleton";
-import { Pen, Pencil } from "lucide-react";
 
 type AccountImageUploadProps = {
   field: string;

@@ -32,11 +32,22 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
   };
 
   const onView = () => {
-    router.push(`/${params.storeId}/payments/${data.id}`);
+    setOpen(true);
   };
 
   return (
     <>
+      <PaymentModel
+        address={data.address}
+        onClose={() => setOpen(false)}
+        onOpenChange={() => setOpen}
+        open={open}
+        phone={data.phone}
+        price={String(data.price)}
+        productImages={data.productImages}
+        productName={data.productName}
+        quantity={String(data.quantity)}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">

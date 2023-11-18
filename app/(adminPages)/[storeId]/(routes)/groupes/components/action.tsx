@@ -42,8 +42,8 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
       await axios.delete(`/api/stores/${params.storeId}/groupes/${data.id}`);
       router.refresh();
       toast.success("Groupe Deleted");
-    } catch (error) {
-      toast.error("Something went wrong");
+    } catch (error: any) {
+      toast.error(error.response.data);
     } finally {
       setIsLoading(false);
       setOpen(false);
@@ -53,7 +53,7 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
   return (
     <>
       <AlerteModel
-        description="this action will delete this collection, it can not be undone"
+        description="this action will delete this groupe, it can not be undone"
         disabled={isLoading}
         onContinue={onDelete}
         onCancel={() => setOpen(false)}

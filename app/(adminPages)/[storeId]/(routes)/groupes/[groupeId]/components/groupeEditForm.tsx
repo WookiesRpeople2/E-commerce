@@ -74,8 +74,8 @@ export const GroupeEditForm: React.FC<GroupeEditFormProps> = ({ data }) => {
       router.refresh();
       router.push(`/${params.storeId}/groupes`);
       toast.success("Groupe Deleted");
-    } catch (error) {
-      toast.error("Something went wrong");
+    } catch (error: any) {
+      toast.error(error.response.data);
     } finally {
       setIsLoading(false);
     }
@@ -84,7 +84,7 @@ export const GroupeEditForm: React.FC<GroupeEditFormProps> = ({ data }) => {
   return (
     <>
       <div className="px-4">
-        <Heading title="Edit" discreption="Edit a collection" />
+        <Heading title="Edit" discreption="Edit a groupe" />
       </div>
       <div className="flex justify-center items-center">
         <Form {...form}>
@@ -100,8 +100,8 @@ export const GroupeEditForm: React.FC<GroupeEditFormProps> = ({ data }) => {
                   </FormControl>
                   <FormDescription>
                     By making a new groupe you will have ways to link products
-                    together like a red and whit pair of shoes that are the same
-                    modele just a differnt color
+                    together. like a red and white pair of shoes that are the
+                    same make and model but that are just in a differnt color
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
