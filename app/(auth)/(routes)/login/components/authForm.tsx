@@ -55,6 +55,14 @@ export const AuthForm = () => {
     }
   };
 
+  const googleLogIn = async () => {
+    const res = await signIn("google");
+    if (res?.ok) {
+      router.refresh();
+      router.push("/");
+    }
+  };
+
   return (
     <div className="flex justify-center items-center flex-col min-h-screen bg-gray-100 w-full">
       <Form {...form}>
@@ -69,7 +77,7 @@ export const AuthForm = () => {
               type="button"
               variant="outline"
               disabled={isLoading}
-              onClick={() => signIn("google")}
+              onClick={googleLogIn}
             >
               Login with google
             </Button>
@@ -114,7 +122,7 @@ export const AuthForm = () => {
               Submit
             </Button>
             <Link href={"/signup"} className="text-blue-800 underline text-sm">
-              Don't have an account yet?
+              Don\'t have an account yet?
             </Link>
           </div>
         </form>
