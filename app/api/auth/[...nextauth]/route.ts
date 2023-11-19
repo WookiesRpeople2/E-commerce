@@ -37,7 +37,7 @@ export const authOptions: AuthOptions = {
         }
 
         if (!users.hashedPassword) {
-          throw Error("no password in db");
+          throw Error("invalid creditials");
         }
 
         const match = await compare(credentials.password, users.hashedPassword);

@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 import { hash } from "bcrypt";
-
 import prismadb from "@/lib/prismadb";
 
 export async function POST(req: Request) {
   try {
-    const { email, password, confirm } = await req.json();
+    const { name, email, password, confirm } = await req.json();
 
     if (!email) {
       return new NextResponse("email field is required", { status: 400 });
@@ -33,6 +32,7 @@ export async function POST(req: Request) {
     const hashedPassword = await hash(password, 12);
     const user = await prismadb.user.create({
       data: {
+        name,
         email,
         hashedPassword,
       },
@@ -41,6 +41,7 @@ export async function POST(req: Request) {
     return NextResponse.json("User created");
   } catch (error) {
     console.log("SIGNUP/POST");
-    new NextResponse("Something went wrong", { status: 500 });
+    console.log(error);
+    return NextResponse.json("Something went wrong", { status: 500 });
   }
 }

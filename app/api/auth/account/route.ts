@@ -6,7 +6,7 @@ import prismadb from "@/lib/prismadb";
 
 export async function PATCH(req: Request) {
   try {
-    const { image, email, password, confirm } = await req.json();
+    const { image, name, email, password, confirm } = await req.json();
     const session = await getServerSession(authOptions);
     const userId = session?.user.userId;
 
@@ -31,6 +31,7 @@ export async function PATCH(req: Request) {
       },
       data: {
         image,
+        name,
         email,
         hashedPassword,
       },

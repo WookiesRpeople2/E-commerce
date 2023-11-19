@@ -20,11 +20,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
 import { DefaultSession } from "next-auth";
+import { Heading } from "@/components/customUi/heading";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
+    name: z.string().min(1),
     email: z.string().min(1),
     image: z.string().min(1),
     password: z.string().optional(),
@@ -45,6 +47,7 @@ export const AccountForm: React.FC<AccountFormProps> = ({ session }) => {
   const form = useForm<TypeOfFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: session?.user?.name || undefined,
       email: session?.user?.email || undefined,
       image: session?.user?.image || undefined,
       password: "",
@@ -66,8 +69,7 @@ export const AccountForm: React.FC<AccountFormProps> = ({ session }) => {
           ...session,
           user: {
             ...session?.user,
-            image: formValues.image,
-            email: formValues.email,
+            ...formValues,
           },
         });
       }
@@ -83,6 +85,9 @@ export const AccountForm: React.FC<AccountFormProps> = ({ session }) => {
 
   return (
     <div>
+      <div className="px-4">
+        <Heading title="Account" discreption="Edit your account" />
+      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -99,6 +104,20 @@ export const AccountForm: React.FC<AccountFormProps> = ({ session }) => {
                     onValueChange={(url) => field.onChange(url)}
                     disabled={isLoading}
                   />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem className="w-80">
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

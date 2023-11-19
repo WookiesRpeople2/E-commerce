@@ -39,6 +39,11 @@ export const Navbar: React.FC<NavbarProps> = ({ stores }) => {
       clicked: pathname === `/${params.storeId}`,
     },
     {
+      link: `/${params.storeId}`,
+      label: "dashboard",
+      clicked: pathname === `/${params.storeId}`,
+    },
+    {
       link: `/${params.storeId}/collections`,
       label: "collections",
       clicked: pathname === `/${params.storeId}/collections`,

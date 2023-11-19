@@ -14,11 +14,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { Separator } from "@/components/ui/separator";
 
 const formSchema = z.object({
   email: z.string().min(1),
@@ -39,93 +39,86 @@ export const AuthForm = () => {
   const router = useRouter();
 
   const onSubmit = async (data: TypeOfFormSchema) => {
-    try {
-      setIsLoading(true);
-      const res = await signIn("credentials", {
-        email: data.email,
-        password: data.password,
-        redirect: false,
-      });
-
-      if (res?.ok !== true) {
-        toast.error("Invalid creditails");
-      } else {
-        router.refresh();
-        router.push("/");
-        toast.success("You have succsessfully logged in");
-      }
-    } catch (error) {
-      error instanceof Error
-        ? toast.error(error.message)
-        : toast.error("Something went wrong");
-    } finally {
+    setIsLoading(true);
+    const res = await signIn("credentials", {
+      ...data,
+      redirect: false,
+    });
+    if (res?.ok) {
+      router.refresh();
+      router.push("/");
+      toast.success("You have succsessfully logged in");
+      setIsLoading(false);
+    } else {
+      toast.error(res?.error as string);
       setIsLoading(false);
     }
   };
 
   return (
-    <>
-      <Card className="w-[650px] h-[500px] flex justify-center items-center bg-black text-white dark:bg-white dark:text-black">
-        <Form {...form}>
-          <CardHeader>
-            <CardTitle>Login</CardTitle>
-          </CardHeader>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="w-1/2 space-y-4"
-          >
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      className="text-black"
-                      placeholder="Please enter your email"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      className="text-black"
-                      placeholder="Please enter your Password"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div>
-              <Button className="mr-8" type="submit" disabled={isLoading}>
-                Submit
-              </Button>
-
-              <Link
-                href={"/signup"}
-                className="text-blue-800 underline text-sm"
-              >
-                Dont have an account sign up
-              </Link>
-            </div>
-          </form>
-        </Form>
-      </Card>
-    </>
+    <div className="flex justify-center items-center flex-col min-h-screen bg-gray-100 w-full">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="bg-white p-16 rounded-md shadow-md w-1/3 space-y-4"
+        >
+          <h1 className="text-center text-2xl">Login</h1>
+          <Separator />
+          <div className="flex justify-center items-center flex-col">
+            <Button
+              type="button"
+              variant="outline"
+              disabled={isLoading}
+              onClick={() => signIn("google")}
+            >
+              Login with google
+            </Button>
+          </div>
+          <Separator />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="Please enter your email"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    placeholder="Please enter your Password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div>
+            <Button className="mr-8 w-36" type="submit" disabled={isLoading}>
+              Submit
+            </Button>
+            <Link href={"/signup"} className="text-blue-800 underline text-sm">
+              Don't have an account yet?
+            </Link>
+          </div>
+        </form>
+      </Form>
+    </div>
   );
 };
