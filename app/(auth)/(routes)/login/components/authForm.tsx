@@ -122,7 +122,7 @@ export const AuthForm = () => {
               Submit
             </Button>
             <Link href={"/signup"} className="text-blue-800 underline text-sm">
-              Don/'t have an account yet?
+              Dont have an account yet?
             </Link>
           </div>
         </form>
