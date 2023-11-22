@@ -19,7 +19,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         <NextAuthProvider>
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="light"
             enableSystem
             disableTransitionOnChange
           >

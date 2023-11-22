@@ -26,9 +26,9 @@ import { useParams, useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
-    name: z.string().min(1),
-    email: z.string().min(1),
-    image: z.string().min(1),
+    name: z.string().min(1, { message: "Must be longer than one character" }),
+    email: z.string().min(1, { message: "Must be longer than one character" }),
+    image: z.string().min(1, { message: "Must Have an image selected" }),
     password: z.string().optional(),
     confirm: z.string().optional(),
   })

@@ -32,14 +32,20 @@ import { Combobox } from "@/components/customUi/combobox";
 import { SizesButton } from "@/components/customUi/sizesButton";
 
 const formSchema = z.object({
-  productName: z.string().min(1),
-  productImages: z.array(z.string()).min(1),
-  colorId: z.string().min(1),
-  sizeId: z.string().min(1),
-  price: z.string().min(1),
-  diliveryPrice: z.string().min(1),
-  quantity: z.string().min(1),
-  groupe: z.string().min(1),
+  productName: z
+    .string()
+    .min(1, { message: "Must be longer than one character" }),
+  productImages: z
+    .array(z.string())
+    .min(2, { message: "Must have at least 2 photos" }),
+  colorId: z.string().min(1, { message: "Must have one color selected" }),
+  sizeId: z.string().min(1, { message: "Must have one size selected" }),
+  price: z.string().min(1, { message: "Must be longer than one character" }),
+  diliveryPrice: z
+    .string()
+    .min(1, { message: "Must be longer than one character" }),
+  quantity: z.string().min(1, { message: "Must be longer than one character" }),
+  groupe: z.string().min(1, { message: "Must have a groupe selected" }),
   collectionName: z.string().optional().nullable(),
 });
 

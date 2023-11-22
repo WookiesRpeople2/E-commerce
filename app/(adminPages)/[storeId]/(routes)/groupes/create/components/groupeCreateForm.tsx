@@ -13,7 +13,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { UploadImage } from "@/components/customUi/uploadImage";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/customUi/heading";
@@ -22,7 +21,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 
 const formSchema = z.object({
-  groupe: z.string().min(1),
+  groupe: z.string().min(1, { message: "Must be longer than one character" }),
 });
 
 type TypeOfFormSchema = z.infer<typeof formSchema>;
