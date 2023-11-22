@@ -93,7 +93,7 @@ export const AuthForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="dark:text-black">Email</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
@@ -110,7 +110,7 @@ export const AuthForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="dark:text-black">Password</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
