@@ -9,8 +9,8 @@ import {
   Tooltip,
   Filler,
   Legend,
-} from "chart.js/dist";
-import { Line } from "react-chartjs-2/dist";
+} from "chart.js";
+import { Line } from "react-chartjs-2";
 
 type MonthleyPaymentChart = {
   paymentsCountByMonth: number[];
