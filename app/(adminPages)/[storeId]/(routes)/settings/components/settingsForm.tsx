@@ -11,7 +11,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Trash } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { AlerteModel } from "@/components/customUi/alerteModel";
@@ -37,34 +36,31 @@ export const SettingsForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = useCallback(
-    async (data: TypeOfFormSchema) => {
-      try {
-        setIsLoading(true);
-        await axios.patch(`/api/stores/${params.storeId}/settings`, data);
-        router.refresh();
-        toast.success("Store name succsessfully update");
-      } catch (error) {
-        toast.error("an Error has occured");
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [params.storeId]
-  );
+  const onSubmit = async (data: TypeOfFormSchema) => {
+    try {
+      setIsLoading(true);
+      await axios.patch(`/api/stores/${params.storeId}/settings`, data);
+      router.refresh();
+      toast.success("Store name succsessfully update");
+    } catch (error: any) {
+      toast.error(error.response.data);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  const onDelete = useCallback(async () => {
+  const onDelete = async () => {
     try {
       setIsLoading(true);
       await axios.delete(`/api/stores/${params.storeId}/settings`);
       router.refresh();
       router.push("/");
-    } catch (error) {
-      toast.error("an Error has occured");
+    } catch (error: any) {
+      toast.error(error.response.data);
     } finally {
       setIsLoading(false);
     }
-  }, [params.storeId]);
+  };
 
   return (
     <>
@@ -96,8 +92,8 @@ export const SettingsForm = () => {
               disabled={isLoading}
               onContinue={onDelete}
             >
-              <Button variant="destructive">
-                <Trash className="w-4 h-4" />
+              <Button variant="destructive" disabled={isLoading}>
+                Delete this store
               </Button>
             </AlerteModel>
           </div>

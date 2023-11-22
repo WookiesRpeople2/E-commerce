@@ -51,7 +51,7 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
       setIsLoading(false);
       setOpen(false);
     }
-  }, []);
+  }, [data]);
 
   return (
     <>
@@ -70,7 +70,7 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
+        <DropdownMenuContent>
           <DropdownMenuItem onClick={onCopy}>
             <ClipboardCopyIcon className="h-4 w-4" /> Copy Id
           </DropdownMenuItem>

@@ -5,12 +5,10 @@ import { Heading } from "@/components/customUi/heading";
 import { columns, Payments } from "./columns";
 
 type PaymentsClientProps = {
-  paymentsWithProductDetails: Payments[];
+  payments: Payments[];
 };
 
-export const PaymentsClient: React.FC<PaymentsClientProps> = ({
-  paymentsWithProductDetails,
-}) => {
+export const PaymentsClient: React.FC<PaymentsClientProps> = ({ payments }) => {
   return (
     <div>
       <div className="px-4">
@@ -20,11 +18,7 @@ export const PaymentsClient: React.FC<PaymentsClientProps> = ({
         />
       </div>
       <div className="container max-w-3xl py-10">
-        <DataTable
-          filter="address"
-          columns={columns}
-          data={paymentsWithProductDetails}
-        />
+        <DataTable filter="address" columns={columns} data={payments} />
       </div>
     </div>
   );

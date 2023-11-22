@@ -21,7 +21,7 @@ export const CollecionsClient: React.FC<CollecionsClientProps> = ({
 
   useEffect(() => {
     updateCollections(collections);
-  }, [collections, updateCollections]);
+  }, []);
 
   const onNew = () => {
     router.push(`/${params.storeId}/collections/create`);

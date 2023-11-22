@@ -41,11 +41,9 @@ export const StoreCombobox: React.FC<StoreComboboxProps> = ({
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  // const [selectedValue, setSelectedValue] = useState(store);
 
   const onSelect = (currentValue: string) => {
     onChange(currentValue);
-    // setSelectedValue(currentValue === selectedValue ? store : currentValue);
     setIsOpen(false);
   };
   return (

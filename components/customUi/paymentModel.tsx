@@ -58,7 +58,7 @@ export const PaymentModel: React.FC<PaymentModelProps> = ({
               <h1 className="text-sm text-muted-foreground">Product Images:</h1>
               <div className="flex">
                 {productImages.map((image, index) => (
-                  <ImagePreview key={index} image={image} />
+                  <ImagePreview key={index} image={image} className="h-40" />
                 ))}
               </div>
             </div>

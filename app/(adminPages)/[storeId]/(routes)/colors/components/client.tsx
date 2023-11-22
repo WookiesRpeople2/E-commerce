@@ -2,8 +2,10 @@
 
 import { DataTable } from "@/components/customUi/data-table";
 import { Heading } from "@/components/customUi/heading";
+import { useColors } from "@/hooks/useColors";
 import { ProductColor } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { columns } from "./columns";
 
 type ColorsClientProps = {
@@ -13,6 +15,11 @@ type ColorsClientProps = {
 export const ColorsClient: React.FC<ColorsClientProps> = ({ colors }) => {
   const router = useRouter();
   const params = useParams();
+  const { color, updateColors } = useColors();
+
+  useEffect(() => {
+    updateColors(colors);
+  }, []);
 
   const onNew = () => {
     router.push(`/${params.storeId}/colors/create`);
@@ -28,7 +35,7 @@ export const ColorsClient: React.FC<ColorsClientProps> = ({ colors }) => {
           onNew={onNew}
           filter="color"
           columns={columns}
-          data={colors}
+          data={color}
         />
       </div>
     </div>

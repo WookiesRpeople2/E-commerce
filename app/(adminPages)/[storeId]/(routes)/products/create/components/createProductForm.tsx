@@ -30,7 +30,6 @@ import {
 import { ColorsButton } from "@/components/customUi/colorsButton";
 import { Combobox } from "@/components/customUi/combobox";
 import { SizesButton } from "@/components/customUi/sizesButton";
-import { Groupes } from "../../../groupes/components/columns";
 
 const formSchema = z.object({
   productName: z.string().min(1),
@@ -108,7 +107,7 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
         setIsLoading(false);
       }
     },
-    [params.productId, params.storeId]
+    [params.productId]
   );
 
   return (

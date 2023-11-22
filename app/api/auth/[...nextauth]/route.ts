@@ -33,7 +33,7 @@ export const authOptions: AuthOptions = {
         });
 
         if (!users) {
-          throw new Error("invalid creditials");
+          throw new Error("Please make sure you have an account");
         }
 
         if (!users.hashedPassword) {

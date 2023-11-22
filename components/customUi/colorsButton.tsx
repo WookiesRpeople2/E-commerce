@@ -29,7 +29,7 @@ export const ColorsButton: React.FC<ColorsPreviewProps> = ({
             variant={value.includes(colorName.id) ? "default" : "secondary"}
             className={cn(
               value.includes(colorName.id)
-                ? "text-white"
+                ? "text-white dark:text-black"
                 : "text-muted-foreground"
             )}
             onClick={() => handleClickColor(colorName.id)}

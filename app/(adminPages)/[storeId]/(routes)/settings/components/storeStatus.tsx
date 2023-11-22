@@ -29,7 +29,7 @@ type Buttons = {
 
 export const StoreStatus: React.FC<StoreStatusProps> = ({ status }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [StoreStatus, setStoreStatus] = useState("");
+  const [storeStatus, setStoreStatus] = useState("");
   const params = useParams();
   const router = useRouter();
 
@@ -64,7 +64,7 @@ export const StoreStatus: React.FC<StoreStatusProps> = ({ status }) => {
     try {
       setIsLoading(true);
       await axios.patch(`/api/stores/${params.storeId}/settings/status`, {
-        status: StoreStatus,
+        status: storeStatus,
       });
       router.refresh();
       toast.success("The status of your store was succsessfully updated");
@@ -73,14 +73,14 @@ export const StoreStatus: React.FC<StoreStatusProps> = ({ status }) => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [storeStatus]);
 
   return (
     <>
       {status && (
         <div className="text-lg text-muted-foreground mb-3">
           The current Status of your store is:
-          <span className="text-xl font-semibold text-black capitalize ml-1">
+          <span className="text-xl font-semibold text-black capitalize ml-1 dark:text-white">
             {status}
           </span>
         </div>

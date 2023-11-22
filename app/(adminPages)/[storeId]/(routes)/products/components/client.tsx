@@ -2,8 +2,10 @@
 
 import { DataTable } from "@/components/customUi/data-table";
 import { Heading } from "@/components/customUi/heading";
-import { Product, ProductColor, ProductGroup } from "@prisma/client";
+import { useProducts } from "@/hooks/useProducts";
+import { ProductGroup } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { columns, Products } from "./columns";
 
 type ProductsHomeClientProps = {
@@ -17,6 +19,11 @@ export const ProductsHomeClient: React.FC<ProductsHomeClientProps> = ({
 }) => {
   const params = useParams();
   const router = useRouter();
+  const { product, updateProducts } = useProducts();
+
+  useEffect(() => {
+    updateProducts(products);
+  }, []);
 
   const onNew = () => {
     router.push(`/${params.storeId}/products/create`);
@@ -30,7 +37,7 @@ export const ProductsHomeClient: React.FC<ProductsHomeClientProps> = ({
           onNew={onNew}
           filter="productName"
           columns={columns}
-          data={products}
+          data={product}
           values={groupes}
         />
       </div>

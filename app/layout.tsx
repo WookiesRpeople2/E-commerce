@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { NextAuthProvider } from "@/providers/nextAuthProvider";
+import { ThemeProvider } from "@/providers/themeProvider";
 import { ToastProvider } from "@/providers/toastProvider";
 import "./globals.css";
 import { Inter } from "next/font/google";
@@ -16,8 +17,15 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
     <html lang="en">
       <body className={inter.className}>
         <NextAuthProvider>
-          <ToastProvider />
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ToastProvider />
+            {children}
+          </ThemeProvider>
         </NextAuthProvider>
       </body>
     </html>

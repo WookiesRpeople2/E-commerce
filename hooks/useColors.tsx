@@ -1,4 +1,5 @@
 import { ProductColor } from "@prisma/client";
+import { immer } from "zustand/middleware/immer";
 import { create } from "zustand";
 
 type State = {
@@ -10,11 +11,13 @@ type Action = {
   deleteColor: (id: string) => void;
 };
 
-export const useColors = create<State & Action>((set) => ({
-  color: [],
-  updateColors: (color) => set(() => ({ color: color })),
-  deleteColor: (id) =>
-    set((state) => ({
-      color: state.color.filter((item) => item.id !== id),
-    })),
-}));
+export const useColors = create<State & Action>()(
+  immer((set) => ({
+    color: [],
+    updateColors: (color) => set(() => ({ color: color })),
+    deleteColor: (id) =>
+      set((state) => ({
+        color: state.color.filter((item) => item.id !== id),
+      })),
+  }))
+);

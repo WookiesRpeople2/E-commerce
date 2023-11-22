@@ -88,7 +88,7 @@ export const CollectionEditForm: React.FC<CollectionAddEditFormProps> = ({
   return (
     <>
       <div className="px-4">
-        <Heading title="Edit" discreption="Edit a collection" />
+        <Heading title="Edit" discreption="Edit this collection" />
       </div>
       <div className="flex justify-center items-center">
         <Form {...form}>
@@ -130,7 +130,7 @@ export const CollectionEditForm: React.FC<CollectionAddEditFormProps> = ({
                 Submit
               </Button>
               <AlerteModel
-                description="This will deltete this billboard, this action can not be undone, IMPORTANT: THIS ACTION WILL ALSO DELETE ANY PRODUCTS FROM THIS COLLECTION"
+                description="This will delete this collection, this action can not be undone, IMPORTANT: THIS ACTION WILL REMOVE THIS COLLECTION FROM THE ASOCIATED PRODUCTS"
                 disabled={isLoading}
                 onContinue={onDelete}
               >

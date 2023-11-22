@@ -133,24 +133,23 @@ model Product {
   collection    Collection?  @relation(fields: [collectionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  payment       Payment[]
 
   @@index([storeId])
 }
 
 model Payment {
-  id        String   @id @default(uuid())
-  isPaid    Boolean  @default(false)
-  phone     String
-  address   String
-  quantity  Int
-  storeId   String
-  store     Store    @relation(fields: [storeId], references: [id])
-  productId String
-  product   Product  @relation(fields: [productId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String   @id @default(uuid())
+  isPaid        Boolean  @default(false)
+  phone         String
+  address       String
+  productName   String
+  price         Float
+  productImages String[]
+  quantity      Int
+  storeId       String
+  store         Store    @relation(fields: [storeId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  @@index([productId])
   @@index([storeId])
 }

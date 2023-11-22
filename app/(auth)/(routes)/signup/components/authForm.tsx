@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { Separator } from "@/components/ui/separator";
 import { signIn } from "next-auth/react";
+import { ToggleTheme } from "@/components/customUi/toggleTheme";
 
 const formSchema = z
   .object({
@@ -52,7 +53,7 @@ export const AuthForm = () => {
       setIsLoading(true);
       const res = await axios.post("api/auth/signup", data);
       router.refresh();
-      router.push("/login");
+      router.push(`/login`);
       toast.success("You have succsessfully signed up");
     } catch (error: any) {
       toast.error(error.response.data);
@@ -70,13 +71,16 @@ export const AuthForm = () => {
   };
 
   return (
-    <div className="flex justify-center items-center flex-col min-h-screen bg-gray-100 w-full">
+    <div className="flex justify-center items-center flex-col min-h-screen bg-gray-100 w-full dark:bg-slate-900 space-y-10">
+      <div>
+        <ToggleTheme />
+      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="bg-white p-16 rounded-md shadow-md w-1/3 space-y-4"
+          className="bg-white p-4 md:p-16 rounded-md shadow-md w-full md:w-1/2 lg:w-1/3 space-y-4"
         >
-          <h1 className="text-center text-2xl">Sign up</h1>
+          <h1 className="text-center text-2xl dark:text-black">Sign up</h1>
           <Separator />
           <div className="flex justify-center items-center flex-col">
             <Button
@@ -149,8 +153,8 @@ export const AuthForm = () => {
               </FormItem>
             )}
           />
-          <div>
-            <Button className="mr-8 w-36" type="submit" disabled={isLoading}>
+          <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-8">
+            <Button className="mr-8 md:w-36" type="submit" disabled={isLoading}>
               Submit
             </Button>
             <Link href={"/login"} className="text-blue-800 underline text-sm">

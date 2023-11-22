@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useCollections } from "@/hooks/useCollections";
+import { useGroupes } from "@/hooks/useGroupes";
 import axios from "axios";
 import { ClipboardCopyIcon, MoreHorizontal, Pencil, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
@@ -25,7 +25,7 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { deleteCollection } = useCollections();
+  const { deleteGroupe } = useGroupes();
 
   const onCopy = () => {
     navigator.clipboard.writeText(data.id);
@@ -40,7 +40,7 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
     try {
       setIsLoading(true);
       await axios.delete(`/api/stores/${params.storeId}/groupes/${data.id}`);
-      router.refresh();
+      deleteGroupe(data.id);
       toast.success("Groupe Deleted");
     } catch (error: any) {
       toast.error(error.response.data);
@@ -48,7 +48,7 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
       setIsLoading(false);
       setOpen(false);
     }
-  }, []);
+  }, [data]);
 
   return (
     <>

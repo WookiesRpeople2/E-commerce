@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AccountImageUpload } from "@/components/customUi/accountImageUpload";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
 import { DefaultSession } from "next-auth";
@@ -59,29 +59,33 @@ export const AccountForm: React.FC<AccountFormProps> = ({ session }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = async (formValues: TypeOfFormSchema) => {
-    try {
-      setIsLoading(true);
-      const res = await axios.patch(`/api/auth/account`, formValues);
+  const onSubmit = useCallback(
+    async (formValues: TypeOfFormSchema) => {
+      try {
+        setIsLoading(true);
+        const res = await axios.patch(`/api/auth/account`, formValues);
 
-      if (res.status === 200) {
-        await update({
-          ...session,
-          user: {
-            ...session?.user,
-            ...formValues,
-          },
-        });
+        if (res.status === 200) {
+          await update({
+            ...session,
+            user: {
+              ...session?.user,
+              ...formValues,
+            },
+          });
+        }
+        router.refresh();
+        router.push(`/${params.storeId}`);
+        toast.success("Account succsessfully updated");
+      } catch (error: any) {
+        toast.error(error.response.data);
+      } finally {
+        setIsLoading(false);
       }
-      router.refresh();
-      router.push(`/${params.storeId}`);
-      toast.success("Account succsessfully updated");
-    } catch (error: any) {
-      toast.error(error.response.data);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      console.log("rerendered");
+    },
+    [session]
+  );
 
   return (
     <div>

@@ -3,6 +3,7 @@
 import { DataTable } from "@/components/customUi/data-table";
 import { Heading } from "@/components/customUi/heading";
 import { useCollections } from "@/hooks/useCollections";
+import { useGroupes } from "@/hooks/useGroupes";
 import { Collection, ProductGroup } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -15,6 +16,11 @@ interface GroupeClientProps {
 export const GroupeClient: React.FC<GroupeClientProps> = ({ groupes }) => {
   const router = useRouter();
   const params = useParams();
+  const { groupe, updateGroupes } = useGroupes();
+
+  useEffect(() => {
+    updateGroupes(groupes);
+  }, []);
 
   const onNew = () => {
     router.push(`/${params.storeId}/groupes/create`);
@@ -33,7 +39,7 @@ export const GroupeClient: React.FC<GroupeClientProps> = ({ groupes }) => {
           onNew={onNew}
           filter="groupe"
           columns={columns}
-          data={groupes}
+          data={groupe}
         />
       </div>
     </div>

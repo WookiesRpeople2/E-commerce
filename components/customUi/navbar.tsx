@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { PopoverAvatar } from "@/components/customUi/popoverAvatar";
 import { Store } from "@prisma/client";
-import { CreateStore } from "./createStores";
+import { CreateStore } from "@/components/customUi/createStores";
+import { ToggleTheme } from "@/components/customUi/toggleTheme";
 
 type NavbarProps = {
   stores: Store[];
@@ -88,7 +89,7 @@ export const Navbar: React.FC<NavbarProps> = ({ stores }) => {
             key={link.label}
             href={link.link}
             className={cn(
-              "first:text-xl first:font-semibold",
+              "first:text-xl first:font-semibold first:opacity-100 first:text-black dark:first:text-white",
               link.clicked ? "opacity-100" : "text-muted-foreground"
             )}
           >
@@ -103,6 +104,7 @@ export const Navbar: React.FC<NavbarProps> = ({ stores }) => {
           handleOnClick={handleOnClick}
           stores={stores}
         />
+        <ToggleTheme />
         <PopoverAvatar />
       </div>
     </nav>

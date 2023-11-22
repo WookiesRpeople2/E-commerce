@@ -8,10 +8,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useProducts } from "@/hooks/useProducts";
 import axios from "axios";
 import { ClipboardCopyIcon, MoreHorizontal, Pencil, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Products } from "./columns";
 
@@ -22,6 +23,7 @@ interface RowActionProps {
 export const RowAction: React.FC<RowActionProps> = ({ data }) => {
   const params = useParams();
   const router = useRouter();
+  const { deleteProduct } = useProducts();
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,11 +36,11 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
     router.push(`/${params.storeId}/products/${data.id}`);
   };
 
-  const onDelete = async () => {
+  const onDelete = useCallback(async () => {
     try {
       setIsLoading(true);
       await axios.delete(`/api/stores/${params.storeId}/products/${data.id}`);
-      router.refresh();
+      deleteProduct(data.id);
       toast.success("Product Deleted");
     } catch (error) {
       toast.error("Something went wrong");
@@ -46,7 +48,7 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
       setIsLoading(false);
       setOpen(false);
     }
-  };
+  }, [data]);
 
   return (
     <>

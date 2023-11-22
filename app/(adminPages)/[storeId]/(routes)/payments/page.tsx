@@ -17,29 +17,9 @@ export default async function PaymentsPage({
     },
   });
 
-  const products = await prismadb.product.findMany({
-    where: {
-      storeId: params.storeId,
-    },
-  });
-
-  const productsMap = products.reduce((acc, product) => {
-    acc[product.id] = {
-      productName: product.productName,
-      productImages: product.productImages,
-      price: product.price,
-    };
-    return acc;
-  }, {} as ProductWithDetails);
-
-  const paymentsWithProductDetails = payments.map((payment) => ({
-    ...payment,
-    ...productsMap[payment.productId],
-  }));
-
   return (
     <div>
-      <PaymentsClient paymentsWithProductDetails={paymentsWithProductDetails} />
+      <PaymentsClient payments={payments} />
     </div>
   );
 }

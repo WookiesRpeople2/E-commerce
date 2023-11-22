@@ -70,7 +70,7 @@ export async function DELETE(
 
     if (product) {
       return new NextResponse(
-        "Please make sure there are no products with this color",
+        "Please make sure there are no products associated with this color",
         { status: 400 }
       );
     }

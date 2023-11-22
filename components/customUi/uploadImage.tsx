@@ -4,8 +4,6 @@ import { CldUploadWidget } from "next-cloudinary";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { FileImage, Trash } from "lucide-react";
-import { CustomCard } from "@/components/customUi/customCard";
-import Image from "next/image";
 import { ImagePreview } from "./imagePreview";
 
 interface UploadImageProps {
@@ -46,7 +44,7 @@ export const UploadImage: React.FC<UploadImageProps> = ({
       )}
 
       {fieldArray && fieldArray.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div className="grid w-64 h-28 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {fieldArray.map((field, fieldIndex) => (
             <ImagePreview key={fieldIndex} image={field} />
           ))}

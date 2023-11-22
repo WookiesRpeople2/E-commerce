@@ -28,7 +28,9 @@ export const SizesButton: React.FC<SizesButtonProps> = ({
             type="button"
             variant={value.includes(size.id) ? "default" : "secondary"}
             className={cn(
-              value.includes(size.id) ? "text-white" : "text-muted-foreground"
+              value.includes(size.id)
+                ? "text-white dark:text-black"
+                : "text-muted-foreground"
             )}
             onClick={() => handleClickSize(size.id)}
             key={size.id}

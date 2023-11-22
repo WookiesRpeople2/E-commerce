@@ -6,6 +6,9 @@ export async function POST(req: Request) {
   try {
     const { name, email, password, confirm } = await req.json();
 
+    if (!name) {
+      return new NextResponse("name field is required", { status: 400 });
+    }
     if (!email) {
       return new NextResponse("email field is required", { status: 400 });
     }
@@ -38,7 +41,7 @@ export async function POST(req: Request) {
       },
     });
 
-    return NextResponse.json("User created");
+    return NextResponse.json(user);
   } catch (error) {
     console.log("SIGNUP/POST");
     console.log(error);

@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useColors } from "@/hooks/useColors";
 import axios from "axios";
 import { ClipboardCopyIcon, MoreHorizontal, Pencil, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
@@ -23,6 +24,7 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
   const params = useParams();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const { deleteColor } = useColors();
   const [isLoading, setIsLoading] = useState(false);
 
   const onCopy = () => {
@@ -38,7 +40,7 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
     try {
       setIsLoading(true);
       await axios.delete(`/api/stores/${params.storeId}/colors/${data.id}`);
-      router.refresh();
+      deleteColor(data.id);
       toast.success("color Deleted");
     } catch (error: any) {
       toast.error(error.response.data);
@@ -46,7 +48,7 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
       setIsLoading(false);
       setOpen(false);
     }
-  }, []);
+  }, [data]);
 
   return (
     <>
