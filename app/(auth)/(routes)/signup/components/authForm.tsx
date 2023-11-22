@@ -154,7 +154,11 @@ export const AuthForm = () => {
             )}
           />
           <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-8">
-            <Button className="mr-8 md:w-36" type="submit" disabled={isLoading}>
+            <Button
+              className="mr-8 md:w-36 dark:rounded-md dark:border"
+              type="submit"
+              disabled={isLoading}
+            >
               Submit
             </Button>
             <Link href={"/login"} className="text-blue-800 underline text-sm">
