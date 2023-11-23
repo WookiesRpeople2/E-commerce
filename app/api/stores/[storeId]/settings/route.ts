@@ -24,7 +24,7 @@ export async function PATCH(
       return new NextResponse("Store name is required", { status: 400 });
     }
 
-    const store = await prismadb.store.updateMany({
+    const store = await prismadb.store.update({
       where: {
         id: params.storeId,
         userId,

@@ -7,6 +7,10 @@ import { PopoverAvatar } from "@/components/customUi/popoverAvatar";
 import { Store } from "@prisma/client";
 import { CreateStore } from "@/components/customUi/createStores";
 import { ToggleTheme } from "@/components/customUi/toggleTheme";
+import { useEffect, useState } from "react";
+import { Hamburger } from "./hamburger";
+import { DropdownMenuItem } from "../ui/dropdown-menu";
+import { Button } from "../ui/button";
 
 type NavbarProps = {
   stores: Store[];
@@ -19,6 +23,21 @@ export const Navbar: React.FC<NavbarProps> = ({ stores }) => {
   const storeName = stores.find(
     (store) => store.id === params.storeId
   )?.storeName;
+
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const handleOnClick = async () => {
     router.refresh();
