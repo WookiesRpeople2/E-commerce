@@ -24,10 +24,14 @@ import { ToggleTheme } from "@/components/customUi/toggleTheme";
 
 const formSchema = z
   .object({
-    name: z.string().min(1),
-    email: z.string().min(1),
-    password: z.string().min(6),
-    confirm: z.string().min(6),
+    name: z.string().min(1, { message: "Must be longer than one character" }),
+    email: z.string().min(1, { message: "Must be longer than one character" }),
+    password: z
+      .string()
+      .min(6, { message: "Must be longer than one character" }),
+    confirm: z
+      .string()
+      .min(6, { message: "Must be longer than one character" }),
   })
   .refine((data) => data.password === data.confirm, {
     message: "Passwords do not match",
@@ -72,9 +76,6 @@ export const AuthForm = () => {
 
   return (
     <div className="flex justify-center items-center flex-col min-h-screen bg-gray-100 w-full dark:bg-slate-900 space-y-10">
-      <div>
-        <ToggleTheme />
-      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -155,18 +156,16 @@ export const AuthForm = () => {
               </FormItem>
             )}
           />
-          <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-8">
-            <Button
-              className="mr-8 md:w-36 dark:rounded-md dark:border"
-              type="submit"
-              disabled={isLoading}
-            >
-              Submit
-            </Button>
-            <Link href={"/login"} className="text-blue-800 underline text-sm">
-              Already have an account?
-            </Link>
-          </div>
+          <Button
+            className="mr-8 w-full dark:rounded-md dark:border"
+            type="submit"
+            disabled={isLoading}
+          >
+            Submit
+          </Button>
+          <Link href={"/login"} className="text-blue-800 underline text-sm">
+            Already have an account?
+          </Link>
         </form>
       </Form>
     </div>

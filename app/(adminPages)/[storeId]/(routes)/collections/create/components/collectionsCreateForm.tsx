@@ -21,8 +21,12 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 
 const formSchema = z.object({
-  collectionName: z.string().min(1),
-  collectionImage: z.string().min(1),
+  collectionName: z
+    .string()
+    .min(1, { message: "Must be longer than one character" }),
+  collectionImage: z
+    .string()
+    .min(1, { message: "Must have one photo selected" }),
 });
 
 type TypeOfFormSchema = z.infer<typeof formSchema>;

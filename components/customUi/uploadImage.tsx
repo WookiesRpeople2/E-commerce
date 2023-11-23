@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { FileImage, Trash } from "lucide-react";
 import { ImagePreview } from "./imagePreview";
+import { toast } from "react-hot-toast";
 
 interface UploadImageProps {
   field?: string;
@@ -32,7 +33,16 @@ export const UploadImage: React.FC<UploadImageProps> = ({
   }
 
   const onUpload = (url: any) => {
-    onValueChange(url.info.url);
+    const validateImage = url.info.url.split("//")[1];
+    const isImage = validateImage.split("/")[2];
+    try {
+      if (isImage !== "image") {
+        throw new Error("You may only upload images");
+      }
+      onValueChange(url.info.url);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
 
   return (

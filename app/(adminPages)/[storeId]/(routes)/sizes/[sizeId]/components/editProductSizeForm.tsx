@@ -23,7 +23,7 @@ import { AlerteModel } from "@/components/customUi/alerteModel";
 import { ProductSize } from "@prisma/client";
 
 const formSchema = z.object({
-  size: z.string().min(1),
+  size: z.string().min(1, { message: "Must be longer than one character" }),
 });
 
 type EditProductSizeFormProps = {
