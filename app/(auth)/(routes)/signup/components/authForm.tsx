@@ -24,14 +24,10 @@ import { ToggleTheme } from "@/components/customUi/toggleTheme";
 
 const formSchema = z
   .object({
-    name: z.string().min(1, { message: "Must be longer than one character" }),
-    email: z.string().min(1, { message: "Must be longer than one character" }),
-    password: z
-      .string()
-      .min(6, { message: "Must be longer than one character" }),
-    confirm: z
-      .string()
-      .min(6, { message: "Must be longer than one character" }),
+    name: z.string().min(1),
+    email: z.string().min(1),
+    password: z.string().min(6),
+    confirm: z.string().min(6),
   })
   .refine((data) => data.password === data.confirm, {
     message: "Passwords do not match",
@@ -159,16 +155,18 @@ export const AuthForm = () => {
               </FormItem>
             )}
           />
-          <Button
-            className="mr-8 w-full dark:rounded-md dark:border"
-            type="submit"
-            disabled={isLoading}
-          >
-            Submit
-          </Button>
-          <Link href={"/login"} className="text-blue-800 underline text-sm">
-            Already have an account?
-          </Link>
+          <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-8">
+            <Button
+              className="mr-8 md:w-36 dark:rounded-md dark:border"
+              type="submit"
+              disabled={isLoading}
+            >
+              Submit
+            </Button>
+            <Link href={"/login"} className="text-blue-800 underline text-sm">
+              Already have an account?
+            </Link>
+          </div>
         </form>
       </Form>
     </div>

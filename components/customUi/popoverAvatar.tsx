@@ -47,7 +47,7 @@ export const PopoverAvatar = () => {
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Button variant="ghost" onClick={() => signOut()}>
-              Sign out
+              Sighn out
             </Button>
           </DropdownMenuItem>
         </DropdownMenuContent>

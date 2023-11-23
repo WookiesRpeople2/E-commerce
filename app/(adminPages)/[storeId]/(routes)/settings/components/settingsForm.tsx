@@ -20,9 +20,7 @@ import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 
 const formSchema = z.object({
-  storeName: z
-    .string()
-    .min(1, { message: "Must be longer than one character" }),
+  storeName: z.string().min(1),
 });
 
 type TypeOfFormSchema = z.infer<typeof formSchema>;

@@ -23,7 +23,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 
 const formSchema = z.object({
-  groupe: z.string().min(1, { message: "Must be longer than one character" }),
+  groupe: z.string().min(1),
 });
 
 type TypeOfFormSchema = z.infer<typeof formSchema>;

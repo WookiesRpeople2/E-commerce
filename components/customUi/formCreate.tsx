@@ -22,9 +22,7 @@ import { useParams, useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
 const formSchema = z.object({
-  storeName: z
-    .string()
-    .min(1, { message: "Must be longer than one character" }),
+  storeName: z.string().min(1),
 });
 
 type TypeOfFormSchema = z.infer<typeof formSchema>;
@@ -56,7 +54,10 @@ export const FormCreate = () => {
 
   return (
     <>
-      <Heading title="Create" discreption="Create a new store" />
+      <Heading
+        title="Create your new store"
+        discreption="please enter the details of your new store"
+      />
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
