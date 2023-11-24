@@ -125,7 +125,7 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col lg:flex-row justify-center items-start lg:grid md:grid-cols-2 lg:grid-cols-3 gap-4"
+            className="flex flex-col lg:flex-row justify-center items-start lg:grid md:grid-cols-2 lg:grid-cols-3 gap-4 pb-5"
           >
             <FormField
               control={form.control}

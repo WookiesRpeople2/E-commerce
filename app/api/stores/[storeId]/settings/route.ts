@@ -53,7 +53,7 @@ export async function DELETE(
       return new NextResponse("UnAuthorized", { status: 401 });
     }
 
-    const payments = await prismadb.payment.findMany({
+    const payments = await prismadb.payment.findFirst({
       where: {
         storeId: params.storeId,
       },
