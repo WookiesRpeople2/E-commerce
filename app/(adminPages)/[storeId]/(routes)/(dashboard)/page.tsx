@@ -95,7 +95,7 @@ export default async function DashboardPage({
           mostBoughtProduct={mostBoughtProduct}
         />
       </div>
-      <div className="flex justify-center items-center h-96 pb-5">
+      <div className="flex justify-center items-center md:h-96 pb-5">
         <MonthleyPaymentChart paymentsCountByMonth={paymentsCountByMonth} />
       </div>
     </div>

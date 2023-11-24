@@ -26,7 +26,13 @@ export default async function SettingsPage({
             <SettingsForm />
           </div>
         </div>
-        <div className="py-4">
+        <div className="flex justify-center items-center flex-col py-10">
+          <h1 className="font-bold">Url to connect to your backend</h1>
+          <h2>
+            {process.env.NEXTAUTH_URL}/api/stores/{params.storeId}
+          </h2>
+        </div>
+        <div>
           <Heading
             title="Set the state of your store"
             discreption="please select wather your store is open or not"

@@ -8,9 +8,10 @@ import { Store } from "@prisma/client";
 import { CreateStore } from "@/components/customUi/createStores";
 import { ToggleTheme } from "@/components/customUi/toggleTheme";
 import { useEffect, useState } from "react";
-import { Hamburger } from "./hamburger";
 import { DropdownMenuItem } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
+import { DesktopNavbar } from "./desktopNavbar";
+import { MobileNavbar } from "./mobileNavbar";
 
 type NavbarProps = {
   stores: Store[];
@@ -24,21 +25,6 @@ export const Navbar: React.FC<NavbarProps> = ({ stores }) => {
     (store) => store.id === params.storeId
   )?.storeName;
 
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 768);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   const handleOnClick = async () => {
     router.refresh();
     router.push(`/${params.storeId}/newStore`);
@@ -50,6 +36,12 @@ export const Navbar: React.FC<NavbarProps> = ({ stores }) => {
     )?.id;
     router.refresh();
     router.push(`/${storeId}`);
+  };
+
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const links = [
@@ -102,19 +94,11 @@ export const Navbar: React.FC<NavbarProps> = ({ stores }) => {
 
   return (
     <nav className="h-20 shadow-md flex px-4 justify-between items-center w-full">
-      <div className="w-full h-full flex items-center space-x-4">
-        {links.map((link) => (
-          <Link
-            key={link.label}
-            href={link.link}
-            className={cn(
-              "first:text-xl first:font-semibold first:opacity-100 first:text-black dark:first:text-white",
-              link.clicked ? "opacity-100" : "text-muted-foreground"
-            )}
-          >
-            {link.label}
-          </Link>
-        ))}
+      <div className="lg:hidden">
+        <MobileNavbar links={links} />
+      </div>
+      <div className="w-full h-full items-center space-x-4 hidden lg:flex">
+        <DesktopNavbar links={links} />
       </div>
       <div className="flex space-x-4">
         <CreateStore

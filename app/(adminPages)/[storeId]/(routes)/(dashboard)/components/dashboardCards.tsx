@@ -49,7 +49,7 @@ export const DashboardCards: React.FC<DashboardCardsProps> = ({
   ];
 
   return (
-    <div className="flex justify-start space-x-6">
+    <div className="flex flex-col md:flex-row md:justify-start md:space-x-6 sm:p-4">
       {cards.map((card) => (
         <DashboardCard
           title={card.title}

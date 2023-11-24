@@ -53,35 +53,39 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div>
-      <div className="flex items-center justify-between py-4">
+    <>
+      <div className="flex flex-col-reverse lg:flex-row lg:items-center lg:justify-between py-4">
         <Input
           placeholder="Search..."
           value={(table.getColumn(filter)?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn(filter)?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm mt-3 lg:my-0"
         />
 
         {values && (
-          <Combobox
-            btnTitle="Search by groupes"
-            values={(values as ProductGroup[]).map((value) => ({
-              name: value.groupe.toLowerCase(),
-              label: value.groupe,
-            }))}
-            onChange={(value) =>
-              table.getColumn("groupe")?.setFilterValue(value)
-            }
-          />
+          <div className="mt-3 lg:my-0">
+            <Combobox
+              btnTitle="Search by groupes"
+              values={(values as ProductGroup[]).map((value) => ({
+                name: value.groupe.toLowerCase(),
+                label: value.groupe,
+              }))}
+              onChange={(value) =>
+                table.getColumn("groupe")?.setFilterValue(value)
+              }
+            />
+          </div>
         )}
 
         {onNew && (
-          <Button onClick={onNew}>
-            <Plus className="h-4 w-4" />
-            New
-          </Button>
+          <div>
+            <Button onClick={onNew}>
+              <Plus className="h-4 w-4" />
+              New
+            </Button>
+          </div>
         )}
       </div>
       <div className="rounded-md border">
@@ -152,6 +156,6 @@ export function DataTable<TData, TValue>({
           Next
         </Button>
       </div>
-    </div>
+    </>
   );
 }
