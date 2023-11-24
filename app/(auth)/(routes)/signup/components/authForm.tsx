@@ -28,10 +28,8 @@ const formSchema = z
     email: z.string().min(1, { message: "Must be longer than one character" }),
     password: z
       .string()
-      .min(6, { message: "Must be longer than one character" }),
-    confirm: z
-      .string()
-      .min(6, { message: "Must be longer than one character" }),
+      .min(6, { message: "Must be longer than 6 characters" }),
+    confirm: z.string().min(6, { message: "Must be longer than 6 characters" }),
   })
   .refine((data) => data.password === data.confirm, {
     message: "Passwords do not match",
