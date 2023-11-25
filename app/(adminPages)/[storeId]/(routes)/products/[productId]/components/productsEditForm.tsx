@@ -265,40 +265,6 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
 
             <FormField
               control={form.control}
-              name="productImages"
-              render={({ field }) => (
-                <FormItem className="w-80">
-                  <FormControl>
-                    <UploadImage
-                      fieldArray={field.value}
-                      disabled={isLoading}
-                      onValueChange={(url) =>
-                        field.onChange([...field.value, url])
-                      }
-                      onRemoveValue={() => field.onChange([])}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="quantity"
-              render={({ field }) => (
-                <FormItem className="w-80">
-                  <FormLabel>Quantity</FormLabel>
-                  <FormControl>
-                    <Input placeholder="20" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
               name="groupe"
               render={({ field }) => (
                 <FormItem className="w-80">
@@ -321,6 +287,40 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
               )}
             />
 
+            <FormField
+              control={form.control}
+              name="quantity"
+              render={({ field }) => (
+                <FormItem className="w-80">
+                  <FormLabel>Quantity</FormLabel>
+                  <FormControl>
+                    <Input placeholder="20" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="productImages"
+              render={({ field }) => (
+                <FormItem className="w-80">
+                  <FormLabel>Upload an image:</FormLabel>
+                  <FormControl>
+                    <UploadImage
+                      fieldArray={field.value}
+                      disabled={isLoading}
+                      onValueChange={(url) =>
+                        field.onChange([...field.value, url])
+                      }
+                      onRemoveValue={() => field.onChange([])}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <div className="col-span-3">
               <div className="flex justify-start space-x-4">
                 <Button disabled={isLoading} type="submit">

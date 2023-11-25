@@ -236,18 +236,23 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
 
             <FormField
               control={form.control}
-              name="productImages"
+              name="groupe"
               render={({ field }) => (
                 <FormItem className="w-80">
+                  <FormLabel>Add a groupe</FormLabel>
                   <FormControl>
-                    <UploadImage
-                      fieldArray={field.value}
-                      disabled={isLoading}
-                      onValueChange={(url) =>
-                        field.onChange([...field.value, url])
-                      }
-                      onRemoveValue={() => field.onChange([])}
-                    />
+                    <div>
+                      <Combobox
+                        btnTitle="View Groupes"
+                        values={(groupes as ProductGroup[]).map(
+                          (collection) => ({
+                            name: collection.groupe.toLowerCase(),
+                            label: collection.groupe,
+                          })
+                        )}
+                        onChange={(value) => field.onChange(value)}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -270,23 +275,19 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
 
             <FormField
               control={form.control}
-              name="groupe"
+              name="productImages"
               render={({ field }) => (
                 <FormItem className="w-80">
-                  <FormLabel>Add a groupe</FormLabel>
+                  <FormLabel>Upload an image:</FormLabel>
                   <FormControl>
-                    <div>
-                      <Combobox
-                        btnTitle="View Groupes"
-                        values={(groupes as ProductGroup[]).map(
-                          (collection) => ({
-                            name: collection.groupe.toLowerCase(),
-                            label: collection.groupe,
-                          })
-                        )}
-                        onChange={(value) => field.onChange(value)}
-                      />
-                    </div>
+                    <UploadImage
+                      fieldArray={field.value}
+                      disabled={isLoading}
+                      onValueChange={(url) =>
+                        field.onChange([...field.value, url])
+                      }
+                      onRemoveValue={() => field.onChange([])}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

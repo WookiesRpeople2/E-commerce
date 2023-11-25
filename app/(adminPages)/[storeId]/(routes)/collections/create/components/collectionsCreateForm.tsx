@@ -90,6 +90,7 @@ export const CollectionCreateForm = () => {
               name="collectionImage"
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel>Upload an image:</FormLabel>
                   <FormControl>
                     <UploadImage
                       field={field.value}

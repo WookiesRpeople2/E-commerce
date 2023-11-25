@@ -34,27 +34,27 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "lg:sizes",
+    accessorKey: "sizes",
     header: () => <div className="lg:text-xl">Size</div>,
   },
   {
-    accessorKey: "lg:price",
+    accessorKey: "price",
     header: () => <div className="lg:text-xl">Price</div>,
   },
   {
-    accessorKey: "lg:diliveryPrice",
+    accessorKey: "diliveryPrice",
     header: () => <div className="lg:text-xl">Delivery</div>,
   },
   {
-    accessorKey: "lg:quantity",
+    accessorKey: "quantity",
     header: () => <div className="lg:text-xl">Quantity</div>,
   },
   {
-    accessorKey: "lg:collectionName",
+    accessorKey: "collectionName",
     header: () => <div className="lg:text-xl">Collection</div>,
   },
   {
-    accessorKey: "lg:groupe",
+    accessorKey: "groupe",
     header: () => <div className="lg:text-xl">Groupe</div>,
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("groupe")}</div>

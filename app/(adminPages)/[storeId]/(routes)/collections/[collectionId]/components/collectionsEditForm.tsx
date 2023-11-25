@@ -116,6 +116,7 @@ export const CollectionEditForm: React.FC<CollectionAddEditFormProps> = ({
               name="collectionImage"
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel>Upload an image:</FormLabel>
                   <FormControl>
                     <UploadImage
                       field={field.value}

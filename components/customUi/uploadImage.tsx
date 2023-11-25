@@ -70,7 +70,7 @@ export const UploadImage: React.FC<UploadImageProps> = ({
             <div className="space-x-4">
               <Button
                 type="button"
-                className="mt-5"
+                variant="outline"
                 disabled={disabled}
                 onClick={onClick}
               >
