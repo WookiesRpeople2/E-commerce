@@ -11,11 +11,11 @@ export type Collections = {
 export const columns: ColumnDef<Collections>[] = [
   {
     accessorKey: "id",
-    header: () => <div className="text-xl">Id</div>,
+    header: () => <div className="lg:text-xl">Id</div>,
   },
   {
     accessorKey: "collectionName",
-    header: () => <div className="text-xl">Name</div>,
+    header: () => <div className="lg:text-xl">Name</div>,
   },
   {
     id: "actions",

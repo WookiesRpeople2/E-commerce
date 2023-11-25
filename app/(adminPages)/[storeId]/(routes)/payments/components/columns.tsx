@@ -19,15 +19,15 @@ export type Payments = {
 export const columns: ColumnDef<Payments>[] = [
   {
     accessorKey: "phone",
-    header: () => <div className="text-xl">Phone number</div>,
+    header: () => <div className="lg:text-xl">Phone number</div>,
   },
   {
     accessorKey: "address",
-    header: () => <div className="text-xl">Address</div>,
+    header: () => <div className="lg:text-xl">Address</div>,
   },
   {
     accessorKey: "isPaid",
-    header: () => <div className="text-xl">Paid</div>,
+    header: () => <div className="lg:text-xl">Paid</div>,
     cell: ({ row }) => {
       const isPaid = row.getValue("isPaid") ? "True" : "False";
       return <div className="text-blue-700">{isPaid}</div>;
@@ -35,11 +35,11 @@ export const columns: ColumnDef<Payments>[] = [
   },
   {
     accessorKey: "quantity",
-    header: () => <div className="text-xl">Quantity</div>,
+    header: () => <div className="lg:text-xl">Quantity</div>,
   },
   {
     accessorKey: "createdAt",
-    header: () => <div className="text-xl">Added</div>,
+    header: () => <div className="lg:text-xl">Added</div>,
     cell: ({ row }) => {
       const date = isToday(row.getValue("createdAt"))
         ? "Today"

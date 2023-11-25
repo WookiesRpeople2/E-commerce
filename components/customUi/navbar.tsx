@@ -40,10 +40,6 @@ export const Navbar: React.FC<NavbarProps> = ({ stores }) => {
 
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!isMobileMenuOpen);
-  };
-
   const links = [
     {
       link: `/${params.storeId}`,

@@ -19,7 +19,6 @@ import { signIn } from "next-auth/react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
-import { ToggleTheme } from "@/components/customUi/toggleTheme";
 
 const formSchema = z.object({
   email: z.string().min(1, { message: "Must be longer than one character" }),
@@ -70,9 +69,9 @@ export const AuthForm = () => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="bg-white p-4 md:p-16 rounded-md shadow-md w-full md:w-1/2 lg:w-1/3 space-y-4"
+            className="bg-white dark:bg-slate-700 p-4 md:p-16 rounded-md shadow-md w-5/6 md:w-1/2 lg:w-1/3 space-y-4"
           >
-            <h1 className="text-center text-2xl dark:text-black">Login</h1>
+            <h1 className="text-center text-2xl dark:text-white">Login</h1>
             <Separator />
             <div className="flex justify-center items-center flex-col">
               <Button
@@ -80,8 +79,11 @@ export const AuthForm = () => {
                 variant="outline"
                 disabled={isLoading}
                 onClick={googleLogIn}
+                className="space-x-3 flex justify-center items-center"
               >
-                Login with google
+                <i className="devicon-google-plain" />
+                <Separator orientation="vertical" />
+                <span>Login with google</span>
               </Button>
             </div>
             <Separator />
@@ -90,7 +92,7 @@ export const AuthForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="dark:text-black">Email</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
@@ -107,7 +109,7 @@ export const AuthForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="dark:text-black">Password</FormLabel>
+                  <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
@@ -119,16 +121,17 @@ export const AuthForm = () => {
                 </FormItem>
               )}
             />
-            <Button
-              className="w-full dark:rounded-md dark:border"
-              type="submit"
-              disabled={isLoading}
-            >
+            <Button className="w-full" type="submit" disabled={isLoading}>
               Submit
             </Button>
-            <Link href={"/signup"} className="text-blue-800 underline text-sm">
-              Dont have an account yet?
-            </Link>
+            <div>
+              <Link
+                href={"/signup"}
+                className="text-blue-700 underline text-sm"
+              >
+                Dont have an account yet?
+              </Link>
+            </div>
           </form>
         </Form>
       </div>

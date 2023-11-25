@@ -12,11 +12,11 @@ export type Sizes = {
 export const columns: ColumnDef<Sizes>[] = [
   {
     accessorKey: "id",
-    header: () => <div className="text-xl">Id</div>,
+    header: () => <div className="lg:text-xl">Id</div>,
   },
   {
     accessorKey: "size",
-    header: () => <div className="text-xl">Size</div>,
+    header: () => <div className="lg:text-xl">Size</div>,
   },
   {
     id: "actions",

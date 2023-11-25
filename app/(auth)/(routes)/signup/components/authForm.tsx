@@ -77,9 +77,9 @@ export const AuthForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="bg-white p-4 md:p-16 rounded-md shadow-md w-full md:w-1/2 lg:w-1/3 space-y-4"
+          className="bg-white dark:bg-slate-700 p-4 md:p-16 rounded-md shadow-md w-5/6 md:w-1/2 lg:w-1/3 space-y-4"
         >
-          <h1 className="text-center text-2xl dark:text-black">Sign up</h1>
+          <h1 className="text-center text-2xl dark:text-white">Sign up</h1>
           <Separator />
           <div className="flex justify-center items-center flex-col">
             <Button
@@ -87,8 +87,11 @@ export const AuthForm = () => {
               variant="outline"
               disabled={isLoading}
               onClick={googleSignUp}
+              className="space-x-3 flex justify-center items-center"
             >
-              Sign up with google
+              <i className="devicon-google-plain" />
+              <Separator orientation="vertical" />
+              <span>Sign up with google</span>
             </Button>
           </div>
           <Separator />
@@ -97,7 +100,7 @@ export const AuthForm = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="dark:text-black">Name</FormLabel>
+                <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input placeholder="Joe doe" {...field} />
                 </FormControl>
@@ -110,7 +113,7 @@ export const AuthForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="dark:text-black">Email</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input type="email" placeholder="joeDoe12@34" {...field} />
                 </FormControl>
@@ -123,7 +126,7 @@ export const AuthForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="dark:text-black">password</FormLabel>
+                <FormLabel>password</FormLabel>
                 <FormControl>
                   <Input
                     type="password"
@@ -140,9 +143,7 @@ export const AuthForm = () => {
             name="confirm"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="dark:text-black">
-                  Confirm password
-                </FormLabel>
+                <FormLabel>Confirm password</FormLabel>
                 <FormControl>
                   <Input
                     type="password"
@@ -155,15 +156,17 @@ export const AuthForm = () => {
             )}
           />
           <Button
-            className="mr-8 w-full dark:rounded-md dark:border"
+            className="mr-8 w-full dark:rounded-md"
             type="submit"
             disabled={isLoading}
           >
             Submit
           </Button>
-          <Link href={"/login"} className="text-blue-800 underline text-sm">
-            Already have an account?
-          </Link>
+          <div>
+            <Link href={"/login"} className="text-blue-700 underline text-sm">
+              Already have an account?
+            </Link>
+          </div>
         </form>
       </Form>
     </div>

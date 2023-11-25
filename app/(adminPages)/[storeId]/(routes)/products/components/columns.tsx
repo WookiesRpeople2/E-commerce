@@ -19,11 +19,11 @@ export type Products = {
 export const columns: ColumnDef<Products>[] = [
   {
     accessorKey: "productName",
-    header: () => <div className="text-xl">Name</div>,
+    header: () => <div className="lg:text-xl">Name</div>,
   },
   {
     accessorKey: "colors",
-    header: () => <div className="text-xl">Color</div>,
+    header: () => <div className="lg:text-xl">Color</div>,
     cell: ({ row }) => {
       const color = row.getValue("colors") as string;
       return (
@@ -34,28 +34,28 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "sizes",
-    header: () => <div className="text-xl">Size</div>,
+    accessorKey: "lg:sizes",
+    header: () => <div className="lg:text-xl">Size</div>,
   },
   {
-    accessorKey: "price",
-    header: () => <div className="text-xl">Price</div>,
+    accessorKey: "lg:price",
+    header: () => <div className="lg:text-xl">Price</div>,
   },
   {
-    accessorKey: "diliveryPrice",
-    header: () => <div className="text-xl">Delivery</div>,
+    accessorKey: "lg:diliveryPrice",
+    header: () => <div className="lg:text-xl">Delivery</div>,
   },
   {
-    accessorKey: "quantity",
-    header: () => <div className="text-xl">Quantity</div>,
+    accessorKey: "lg:quantity",
+    header: () => <div className="lg:text-xl">Quantity</div>,
   },
   {
-    accessorKey: "collectionName",
-    header: () => <div className="text-xl">Collection</div>,
+    accessorKey: "lg:collectionName",
+    header: () => <div className="lg:text-xl">Collection</div>,
   },
   {
-    accessorKey: "groupe",
-    header: () => <div className="text-xl">Groupe</div>,
+    accessorKey: "lg:groupe",
+    header: () => <div className="lg:text-xl">Groupe</div>,
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("groupe")}</div>
     ),

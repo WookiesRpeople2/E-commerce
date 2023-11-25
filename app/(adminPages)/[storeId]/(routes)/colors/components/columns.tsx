@@ -12,7 +12,7 @@ export type Colors = {
 export const columns: ColumnDef<Colors>[] = [
   {
     accessorKey: "preview",
-    header: () => <div className="text-xl">Preview</div>,
+    header: () => <div className="lg:text-xl">Preview</div>,
     cell: ({ row }) => {
       return (
         <div className="flex space-x-1">
@@ -23,7 +23,7 @@ export const columns: ColumnDef<Colors>[] = [
   },
   {
     accessorKey: "color",
-    header: () => <div className="text-xl">Colors</div>,
+    header: () => <div className="lg:text-xl">Colors</div>,
     cell: ({ row }) => {
       return <div className="capitalize">{row.getValue("color")}</div>;
     },

@@ -11,11 +11,11 @@ export type Groupes = {
 export const columns: ColumnDef<Groupes>[] = [
   {
     accessorKey: "id",
-    header: () => <div className="text-xl">Id</div>,
+    header: () => <div className="lg:text-xl">Id</div>,
   },
   {
     accessorKey: "groupe",
-    header: () => <div className="text-xl">Group</div>,
+    header: () => <div className="lg:text-xl">Group</div>,
   },
   {
     id: "actions",

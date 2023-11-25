@@ -26,6 +26,7 @@ type ComboboxProps = {
   values: ValueObjects[];
   btnTitle: string;
   exsistingValue?: string;
+  className?: string;
   onChange: (value: string | null) => void;
 };
 
@@ -33,6 +34,7 @@ export const Combobox: React.FC<ComboboxProps> = ({
   values,
   btnTitle,
   exsistingValue,
+  className,
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +51,7 @@ export const Combobox: React.FC<ComboboxProps> = ({
   return (
     <>
       <Popover open={isOpen} onOpenChange={setIsOpen}>
-        <div className="flex space-x-2">
+        <div className={cn("flex space-x-2", className)}>
           <PopoverTrigger asChild>
             <Button variant="outline" role="combobox" aria-expanded={isOpen}>
               {selectedValue
