@@ -13,7 +13,7 @@ export const ColorsCircle: React.FC<ColorsCircleProps> = ({ color }) => {
         style={{
           backgroundColor: Color(color.toLowerCase()).rgb().toString(),
         }}
-        className="h-4 w-4 rounded-full"
+        className="h-4 w-4 rounded-full border border-black dark:border-white"
       ></div>
     </div>
   );
