@@ -28,7 +28,7 @@ export const ColorsClient: React.FC<ColorsClientProps> = ({ colors }) => {
   return (
     <div>
       <div className="px-4">
-        <Heading title="Colors" discreption="see the colors in your store" />
+        <Heading title="Colors" discreption="see the colors of your store" />
       </div>
       <div className="container max-w-3xl py-10">
         <DataTable
