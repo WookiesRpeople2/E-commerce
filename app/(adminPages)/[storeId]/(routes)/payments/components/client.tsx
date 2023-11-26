@@ -14,7 +14,7 @@ export const PaymentsClient: React.FC<PaymentsClientProps> = ({ payments }) => {
       <div className="px-4">
         <Heading
           title="Payments"
-          discreption="see the payments in your store"
+          discreption="see the payments of your store"
         />
       </div>
       <div className="container max-w-3xl py-10">
