@@ -40,6 +40,7 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
     try {
       setIsLoading(true);
       await axios.delete(`/api/stores/${params.storeId}/colors/${data.id}`);
+      router.refresh();
       deleteColor(data.id);
       toast.success("color Deleted");
     } catch (error: any) {

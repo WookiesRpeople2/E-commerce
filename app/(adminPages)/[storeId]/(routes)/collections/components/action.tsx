@@ -42,8 +42,8 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
       await axios.delete(
         `/api/stores/${params.storeId}/collections/${data.id}`
       );
-      deleteCollection(data.id);
       router.refresh();
+      deleteCollection(data.id);
       toast.success("Collection Deleted");
     } catch (error: any) {
       toast.error("Something went wrong");

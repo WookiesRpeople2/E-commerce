@@ -40,6 +40,7 @@ export const RowAction: React.FC<RowActionProps> = ({ data }) => {
     try {
       setIsLoading(true);
       await axios.delete(`/api/stores/${params.storeId}/groupes/${data.id}`);
+      router.refresh();
       deleteGroupe(data.id);
       toast.success("Groupe Deleted");
     } catch (error: any) {
