@@ -86,13 +86,19 @@ export async function GET(
   { params }: { params: { storeId: string; collectionId: string } }
 ) {
   try {
+    const collection = await prismadb.collection.findFirst({
+      where: {
+        id: params.collectionId,
+      },
+    });
+
     const products = await prismadb.product.findMany({
       where: {
         collectionId: params.collectionId,
         storeId: params.storeId,
       },
     });
-    return NextResponse.json(products);
+    return NextResponse.json({ collection, products });
   } catch (error) {
     console.log("/STORES/STOREID/COLLECTION/GET");
     return NextResponse.json(error);
