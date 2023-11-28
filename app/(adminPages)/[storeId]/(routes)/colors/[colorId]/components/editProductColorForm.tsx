@@ -67,7 +67,9 @@ export const EditProductColorForm: React.FC<EditProductColorFormProps> = ({
         setIsLoading(true);
         await axios.patch(
           `/api/stores/${params.storeId}/colors/${params.colorId}`,
-          formValue
+          {
+            color: formValue.color.toUpperCase(),
+          }
         );
         toast.success("Color Updated");
 

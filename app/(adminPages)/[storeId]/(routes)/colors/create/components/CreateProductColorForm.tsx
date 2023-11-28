@@ -57,7 +57,9 @@ export const CreateProductColorForm = () => {
     async (formValue: TypeOfFormSchema) => {
       try {
         setIsLoading(true);
-        await axios.post(`/api/stores/${params.storeId}/colors/`, formValue);
+        await axios.post(`/api/stores/${params.storeId}/colors/`, {
+          color: formValue.color.toUpperCase(),
+        });
         toast.success("Color Created");
 
         router.refresh();

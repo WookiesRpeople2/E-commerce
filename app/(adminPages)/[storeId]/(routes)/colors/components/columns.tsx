@@ -24,9 +24,6 @@ export const columns: ColumnDef<Colors>[] = [
   {
     accessorKey: "color",
     header: () => <div className="lg:text-xl">Colors</div>,
-    cell: ({ row }) => {
-      return <div className="capitalize">{row.getValue("color")}</div>;
-    },
   },
   {
     id: "actions",
