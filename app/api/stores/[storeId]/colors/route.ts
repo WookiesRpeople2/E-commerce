@@ -50,7 +50,7 @@ export async function GET(
 
     return NextResponse.json(colors);
   } catch (error) {
-    console.log("STORES/STOREID/COLORS/GET");
+    console.log("STORES/STOREID/Color/GET");
     return NextResponse.json(error);
   }
 }
