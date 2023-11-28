@@ -97,6 +97,11 @@ export async function GET(
         collectionId: params.collectionId,
         storeId: params.storeId,
       },
+      include: {
+        productColor: true,
+        productSize: true,
+        groupe: true,
+      },
     });
     return NextResponse.json({ collection, products });
   } catch (error) {
