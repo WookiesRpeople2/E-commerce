@@ -33,6 +33,11 @@ import { Combobox } from "@/components/customUi/combobox";
 import { SizesButton } from "@/components/customUi/sizesButton";
 import { AlerteModel } from "@/components/customUi/alerteModel";
 
+const isFloatWithDot = (value: string) => {
+  const floatRegex = /^[+-]?([0-9]*[.])?[0-9]+$/;
+  return floatRegex.test(value);
+};
+
 const formSchema = z.object({
   productName: z
     .string()
@@ -42,10 +47,18 @@ const formSchema = z.object({
     .min(2, { message: "Must have at least 2 photos" }),
   colorId: z.string().min(1, { message: "Must have one color selected" }),
   sizeId: z.string().min(1, { message: "Must have one size selected" }),
-  price: z.string().min(1, { message: "Must be longer than one character" }),
+  price: z
+    .string()
+    .min(1, { message: "Must be longer than one character" })
+    .refine((value) => isFloatWithDot(value), {
+      message: "Please use a . and not a ,",
+    }),
   diliveryPrice: z
     .string()
-    .min(1, { message: "Must be longer than one character" }),
+    .min(1, { message: "Must be longer than one character" })
+    .refine((value) => isFloatWithDot(value), {
+      message: "please use a . and not a ,",
+    }),
   quantity: z.string().min(1, { message: "Must be longer than one character" }),
   groupe: z.string().min(1, { message: "Must have a groupe selected" }),
   collectionName: z.string().optional().nullable(),
@@ -223,7 +236,7 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
               name="diliveryPrice"
               render={({ field }) => (
                 <FormItem className="w-80">
-                  <FormLabel>Price</FormLabel>
+                  <FormLabel>Delivery price</FormLabel>
                   <FormControl>
                     <Input placeholder="10" {...field} />
                   </FormControl>

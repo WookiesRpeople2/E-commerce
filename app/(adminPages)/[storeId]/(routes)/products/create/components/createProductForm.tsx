@@ -196,7 +196,7 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
               name="diliveryPrice"
               render={({ field }) => (
                 <FormItem className="w-80">
-                  <FormLabel>Price</FormLabel>
+                  <FormLabel>Delivery price</FormLabel>
                   <FormControl>
                     <Input placeholder="10" {...field} />
                   </FormControl>
