@@ -11,7 +11,7 @@ export const ColorsCircle: React.FC<ColorsCircleProps> = ({ color }) => {
     <div className="space-x-1">
       <div
         style={{
-          backgroundColor: Color(color).rgb().toString(),
+          backgroundColor: Color(color.toLowerCase()).rgb().toString(),
         }}
         className="h-4 w-4 rounded-full border border-black dark:border-white"
       ></div>
