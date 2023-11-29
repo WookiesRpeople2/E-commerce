@@ -30,6 +30,8 @@ interface DataTableProps<TData, TValue> {
   filter: string;
   onNew?: () => void;
   values?: ProductGroup[];
+  selectedValue?: string;
+  setSelectedValue?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export function DataTable<TData, TValue>({
@@ -38,6 +40,8 @@ export function DataTable<TData, TValue>({
   filter,
   onNew,
   values,
+  selectedValue,
+  setSelectedValue,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
@@ -71,6 +75,10 @@ export function DataTable<TData, TValue>({
               name: value.groupe.toLowerCase(),
               label: value.groupe,
             }))}
+            selectedValue={selectedValue as string}
+            setSelectedValue={
+              setSelectedValue as React.Dispatch<React.SetStateAction<string>>
+            }
             onChange={(value) =>
               table.getColumn("groupe")?.setFilterValue(value)
             }

@@ -33,11 +33,6 @@ import { Combobox } from "@/components/customUi/combobox";
 import { SizesButton } from "@/components/customUi/sizesButton";
 import { AlerteModel } from "@/components/customUi/alerteModel";
 
-const isFloatWithDot = (value: string) => {
-  const floatRegex = /^[+-]?([0-9]*[.])?[0-9]+$/;
-  return floatRegex.test(value);
-};
-
 const formSchema = z.object({
   productName: z
     .string()
@@ -47,18 +42,10 @@ const formSchema = z.object({
     .min(2, { message: "Must have at least 2 photos" }),
   colorId: z.string().min(1, { message: "Must have one color selected" }),
   sizeId: z.string().min(1, { message: "Must have one size selected" }),
-  price: z
-    .string()
-    .min(1, { message: "Must be longer than one character" })
-    .refine((value) => isFloatWithDot(value), {
-      message: "Please use a . and not a ,",
-    }),
+  price: z.string().min(1, { message: "Must be longer than one character" }),
   diliveryPrice: z
     .string()
-    .min(1, { message: "Must be longer than one character" })
-    .refine((value) => isFloatWithDot(value), {
-      message: "please use a . and not a ,",
-    }),
+    .min(1, { message: "Must be longer than one character" }),
   quantity: z.string().min(1, { message: "Must be longer than one character" }),
   groupe: z.string().min(1, { message: "Must have a groupe selected" }),
   collectionName: z.string().optional().nullable(),
@@ -81,6 +68,14 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
   sizes,
   groupes,
 }) => {
+  const collectionName = collections
+    ?.find((collection) => collection.id === product?.collectionId)
+    ?.collectionName.toLowerCase();
+
+  const groupe = groupes
+    ?.find((groupe) => groupe.id === product?.groupeId)
+    ?.groupe.toLowerCase();
+
   const form = useForm<TypeOfFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -89,22 +84,24 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
       diliveryPrice: String(product?.diliveryPrice),
       quantity: String(product?.quantity),
       colorId: product?.colorId,
-
-      groupe: groupes?.find((groupe) => groupe.id === product?.groupeId)
-        ?.groupe,
-
-      collectionName: collections?.find(
-        (collection) => collection.id === product?.collectionId
-      )?.collectionName,
+      groupe: groupe,
+      collectionName: collectionName,
     },
   });
   const params = useParams();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
+  const [collectionsSelectedValue, setCollectionsSelectedValue] = useState(
+    collectionName as string
+  );
+  const [groupeSelectedValue, setGroupeSelectedValue] = useState(
+    groupe as string
+  );
+
   const onSubmit = useCallback(
     async (formValue: TypeOfFormSchema) => {
-      const collection = collections?.find(
+      const collectionId = collections?.find(
         (collection) =>
           collection.collectionName.toLowerCase() === formValue.collectionName
       )?.id;
@@ -119,11 +116,11 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
           `/api/stores/${params.storeId}/products/${params.productId}`,
           {
             ...formValue,
-            price: Number(formValue.price),
-            diliveryPrice: Number(formValue.diliveryPrice),
+            price: Number(formValue.price.replace(",", ".")),
+            diliveryPrice: Number(formValue.diliveryPrice.replace(",", ".")),
             quantity: Number(formValue.quantity),
             groupeId: groupeId ? groupeId : product?.groupeId,
-            collectionId: collection ? collection : null,
+            collectionId: formValue.collectionName ? collectionId : null,
           }
         );
 
@@ -136,7 +133,7 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
         setIsLoading(false);
       }
     },
-    [params.productId, params.storeId]
+    [params.productId]
   );
 
   const onDelete = useCallback(async () => {
@@ -154,7 +151,7 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
     } finally {
       setIsLoading(false);
     }
-  }, [params.productId, params.storeId]);
+  }, [params.productId]);
 
   return (
     <>
@@ -254,14 +251,15 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
                   <FormControl>
                     <div>
                       <Combobox
-                        btnTitle={"View collections"}
+                        btnTitle="View collections"
                         values={(collections as Collection[]).map(
                           (collection) => ({
                             name: collection.collectionName.toLowerCase(),
                             label: collection.collectionName,
                           })
                         )}
-                        exsistingValue={field.value?.toLowerCase() as string}
+                        selectedValue={collectionsSelectedValue}
+                        setSelectedValue={setCollectionsSelectedValue}
                         onChange={(value) => field.onChange(value)}
                       />
                     </div>
@@ -290,7 +288,8 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
                           name: groupe.groupe.toLowerCase(),
                           label: groupe.groupe,
                         }))}
-                        exsistingValue={field.value?.toLowerCase() as string}
+                        selectedValue={groupeSelectedValue}
+                        setSelectedValue={setGroupeSelectedValue}
                         onChange={(value) => field.onChange(value)}
                       />
                     </div>

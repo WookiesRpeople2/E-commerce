@@ -5,7 +5,7 @@ import { Heading } from "@/components/customUi/heading";
 import { useProducts } from "@/hooks/useProducts";
 import { ProductGroup } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { columns, Products } from "./columns";
 
 type ProductsHomeClientProps = {
@@ -20,6 +20,7 @@ export const ProductsHomeClient: React.FC<ProductsHomeClientProps> = ({
   const params = useParams();
   const router = useRouter();
   const { product, updateProducts } = useProducts();
+  const [selectedValue, setSelectedValue] = useState("");
 
   useEffect(() => {
     updateProducts(products);
@@ -39,6 +40,8 @@ export const ProductsHomeClient: React.FC<ProductsHomeClientProps> = ({
           columns={columns}
           data={product}
           values={groupes}
+          selectedValue={selectedValue}
+          setSelectedValue={setSelectedValue}
         />
       </div>
     </div>

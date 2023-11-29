@@ -25,7 +25,8 @@ type ValueObjects = {
 type ComboboxProps = {
   values: ValueObjects[];
   btnTitle: string;
-  exsistingValue?: string;
+  selectedValue: string;
+  setSelectedValue: React.Dispatch<React.SetStateAction<string>>;
   className?: string;
   onChange: (value: string | null) => void;
 };
@@ -33,18 +34,17 @@ type ComboboxProps = {
 export const Combobox: React.FC<ComboboxProps> = ({
   values,
   btnTitle,
-  exsistingValue,
+  selectedValue,
+  setSelectedValue,
   className,
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(exsistingValue || null);
 
   const onSelect = (currentValue: string) => {
     const newValue = currentValue === selectedValue ? null : currentValue;
-
     onChange(newValue);
-    setSelectedValue(newValue);
+    setSelectedValue(newValue as string);
 
     setIsOpen(false);
   };

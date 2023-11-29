@@ -64,6 +64,9 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
   sizes,
   groupes,
 }) => {
+  const [collectionsSelectedValue, setCollectionsSelectedValue] = useState("");
+  const [groupeSelectedValue, setGroupeSelectedValue] = useState("");
+
   const form = useForm<TypeOfFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -97,8 +100,8 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
         setIsLoading(true);
         await axios.post(`/api/stores/${params.storeId}/products`, {
           ...formValue,
-          price: Number(formValue.price),
-          diliveryPrice: Number(formValue.diliveryPrice),
+          price: Number(formValue.price.replace(",", ".")),
+          diliveryPrice: Number(formValue.diliveryPrice.replace(",", ".")),
           quantity: Number(formValue.quantity),
           groupeId,
           collectionId,
@@ -221,6 +224,8 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
                             label: collection.collectionName,
                           })
                         )}
+                        selectedValue={collectionsSelectedValue}
+                        setSelectedValue={setCollectionsSelectedValue}
                         onChange={(value) => field.onChange(value)}
                       />
                     </div>
@@ -250,6 +255,8 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
                             label: collection.groupe,
                           })
                         )}
+                        selectedValue={groupeSelectedValue}
+                        setSelectedValue={setGroupeSelectedValue}
                         onChange={(value) => field.onChange(value)}
                       />
                     </div>
