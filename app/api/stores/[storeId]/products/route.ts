@@ -84,7 +84,6 @@ export async function GET(
     const products = await prismadb.product.findMany({
       where: {
         storeId: params.storeId,
-        collectionId: null,
       },
       include: {
         productColor: true,
