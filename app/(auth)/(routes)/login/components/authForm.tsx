@@ -1,6 +1,5 @@
 "use client";
 
-import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -19,17 +18,11 @@ import { signIn } from "next-auth/react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
-
-const formSchema = z.object({
-  email: z.string().min(1, { message: "Must be longer than one character" }),
-  password: z.string().min(1, { message: "Must be longer than one character" }),
-});
-
-type TypeOfFormSchema = z.infer<typeof formSchema>;
+import { loginFormSchema, TypeOfLoginFormSchema } from "@/types/zodSchemas";
 
 export const AuthForm = () => {
-  const form = useForm<TypeOfFormSchema>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<TypeOfLoginFormSchema>({
+    resolver: zodResolver(loginFormSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -38,7 +31,7 @@ export const AuthForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const onSubmit = async (data: TypeOfFormSchema) => {
+  const onSubmit = async (data: TypeOfLoginFormSchema) => {
     setIsLoading(true);
     const res = await signIn("credentials", {
       ...data,

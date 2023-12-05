@@ -1,8 +1,7 @@
 "use client";
-import * as z from "zod";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import Color from "color";
 
 import {
   Form,
@@ -20,31 +19,11 @@ import { Heading } from "@/components/customUi/heading";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-
-const formSchema = z.object({
-  color: z
-    .string()
-    .min(1)
-    .refine(
-      (value) => {
-        try {
-          Color(value.toLowerCase());
-          return true;
-        } catch (error) {
-          return false;
-        }
-      },
-      {
-        message: "This is not a valid color",
-      }
-    ),
-});
-
-type TypeOfFormSchema = z.infer<typeof formSchema>;
+import { colorFormSchema, TypeOfColorFormSchema } from "@/types/zodSchemas";
 
 export const CreateProductColorForm = () => {
-  const form = useForm<TypeOfFormSchema>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<TypeOfColorFormSchema>({
+    resolver: zodResolver(colorFormSchema),
     defaultValues: {
       color: "",
     },
@@ -54,7 +33,7 @@ export const CreateProductColorForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(
-    async (formValue: TypeOfFormSchema) => {
+    async (formValue: TypeOfColorFormSchema) => {
       try {
         setIsLoading(true);
         await axios.post(`/api/stores/${params.storeId}/colors/`, {

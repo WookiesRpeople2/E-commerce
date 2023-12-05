@@ -1,9 +1,9 @@
 "use client";
-import * as z from "zod";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { Collection, ProductGroup } from "@prisma/client";
+import { ProductGroup } from "@prisma/client";
 import {
   Form,
   FormControl,
@@ -21,20 +21,15 @@ import { useParams, useRouter } from "next/navigation";
 import { AlerteModel } from "@/components/customUi/alerteModel";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-
-const formSchema = z.object({
-  groupe: z.string().min(1, { message: "Must be longer than one character" }),
-});
-
-type TypeOfFormSchema = z.infer<typeof formSchema>;
+import { groupeFormSchema, TypeOfGroupeFormSchema } from "@/types/zodSchemas";
 
 type GroupeEditFormProps = {
   data: ProductGroup | null;
 };
 
 export const GroupeEditForm: React.FC<GroupeEditFormProps> = ({ data }) => {
-  const form = useForm<TypeOfFormSchema>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<TypeOfGroupeFormSchema>({
+    resolver: zodResolver(groupeFormSchema),
     defaultValues: {
       groupe: data?.groupe,
     },
@@ -44,7 +39,7 @@ export const GroupeEditForm: React.FC<GroupeEditFormProps> = ({ data }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(
-    async (formValue: TypeOfFormSchema) => {
+    async (formValue: TypeOfGroupeFormSchema) => {
       try {
         setIsLoading(true);
         await axios.patch(

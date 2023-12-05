@@ -18,18 +18,14 @@ import { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
-
-const formSchema = z.object({
-  storeName: z
-    .string()
-    .min(1, { message: "Must be longer than one character" }),
-});
-
-type TypeOfFormSchema = z.infer<typeof formSchema>;
+import {
+  settingsFormSchema,
+  TypeOfSettingsFormSchema,
+} from "@/types/zodSchemas";
 
 export const SettingsForm = () => {
-  const form = useForm<TypeOfFormSchema>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<TypeOfSettingsFormSchema>({
+    resolver: zodResolver(settingsFormSchema),
     defaultValues: {
       storeName: "",
     },
@@ -38,7 +34,7 @@ export const SettingsForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = async (data: TypeOfFormSchema) => {
+  const onSubmit = async (data: TypeOfSettingsFormSchema) => {
     try {
       setIsLoading(true);
       await axios.patch(`/api/stores/${params.storeId}/settings`, data);

@@ -1,6 +1,5 @@
 "use client";
 
-import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -20,27 +19,14 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { Separator } from "@/components/ui/separator";
 import { signIn } from "next-auth/react";
-import { ToggleTheme } from "@/components/customUi/toggleTheme";
-
-const formSchema = z
-  .object({
-    name: z.string().min(1, { message: "Must be longer than one character" }),
-    email: z.string().min(1, { message: "Must be longer than one character" }),
-    password: z
-      .string()
-      .min(6, { message: "Must be longer than 6 characters" }),
-    confirm: z.string().min(6, { message: "Must be longer than 6 characters" }),
-  })
-  .refine((data) => data.password === data.confirm, {
-    message: "Passwords do not match",
-    path: ["confirm"],
-  });
-
-type TypeOfFormSchema = z.infer<typeof formSchema>;
+import {
+  sighnUpAndAccountFormSchema,
+  TypeOfSighnUpAndAccountFormSchema,
+} from "@/types/zodSchemas";
 
 export const AuthForm = () => {
-  const form = useForm<TypeOfFormSchema>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<TypeOfSighnUpAndAccountFormSchema>({
+    resolver: zodResolver(sighnUpAndAccountFormSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -50,7 +36,7 @@ export const AuthForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = async (data: TypeOfFormSchema) => {
+  const onSubmit = async (data: TypeOfSighnUpAndAccountFormSchema) => {
     try {
       setIsLoading(true);
       const res = await axios.post("api/auth/signup", data);

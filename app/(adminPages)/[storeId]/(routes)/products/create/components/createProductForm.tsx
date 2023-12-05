@@ -30,26 +30,10 @@ import {
 import { ColorsButton } from "@/components/customUi/colorsButton";
 import { Combobox } from "@/components/customUi/combobox";
 import { SizesButton } from "@/components/customUi/sizesButton";
-
-const formSchema = z.object({
-  productName: z
-    .string()
-    .min(1, { message: "Must be longer than one character" }),
-  productImages: z
-    .array(z.string())
-    .min(2, { message: "Must have at least 2 photos" }),
-  colorId: z.string().min(1, { message: "Must have one color selected" }),
-  sizeId: z.string().min(1, { message: "Must have one size selected" }),
-  price: z.string().min(1, { message: "Must be longer than one character" }),
-  diliveryPrice: z
-    .string()
-    .min(1, { message: "Must be longer than one character" }),
-  quantity: z.string().min(1, { message: "Must be longer than one character" }),
-  groupe: z.string().min(1, { message: "Must have a groupe selected" }),
-  collectionName: z.string().optional().nullable(),
-});
-
-type TypeOfFormSchema = z.infer<typeof formSchema>;
+import {
+  productsFormSchema,
+  TypeOfProductsFormSchema,
+} from "@/types/zodSchemas";
 
 type CreateProductFormProps = {
   collections: Collection[] | null;
@@ -67,8 +51,8 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
   const [collectionsSelectedValue, setCollectionsSelectedValue] = useState("");
   const [groupeSelectedValue, setGroupeSelectedValue] = useState("");
 
-  const form = useForm<TypeOfFormSchema>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<TypeOfProductsFormSchema>({
+    resolver: zodResolver(productsFormSchema),
     defaultValues: {
       productName: "",
       productImages: [],
@@ -86,7 +70,7 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(
-    async (formValue: TypeOfFormSchema) => {
+    async (formValue: TypeOfProductsFormSchema) => {
       const collectionId = collections?.find(
         (collection) =>
           collection.collectionName.toLowerCase() === formValue.collectionName

@@ -32,26 +32,10 @@ import { ColorsButton } from "@/components/customUi/colorsButton";
 import { Combobox } from "@/components/customUi/combobox";
 import { SizesButton } from "@/components/customUi/sizesButton";
 import { AlerteModel } from "@/components/customUi/alerteModel";
-
-const formSchema = z.object({
-  productName: z
-    .string()
-    .min(1, { message: "Must be longer than one character" }),
-  productImages: z
-    .array(z.string())
-    .min(2, { message: "Must have at least 2 photos" }),
-  colorId: z.string().min(1, { message: "Must have one color selected" }),
-  sizeId: z.string().min(1, { message: "Must have one size selected" }),
-  price: z.string().min(1, { message: "Must be longer than one character" }),
-  diliveryPrice: z
-    .string()
-    .min(1, { message: "Must be longer than one character" }),
-  quantity: z.string().min(1, { message: "Must be longer than one character" }),
-  groupe: z.string().min(1, { message: "Must have a groupe selected" }),
-  collectionName: z.string().optional().nullable(),
-});
-
-type TypeOfFormSchema = z.infer<typeof formSchema>;
+import {
+  productsFormSchema,
+  TypeOfProductsFormSchema,
+} from "@/types/zodSchemas";
 
 type CreateProductFormProps = {
   product: Product | null;
@@ -76,8 +60,8 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
     ?.find((groupe) => groupe.id === product?.groupeId)
     ?.groupe.toLowerCase();
 
-  const form = useForm<TypeOfFormSchema>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<TypeOfProductsFormSchema>({
+    resolver: zodResolver(productsFormSchema),
     defaultValues: {
       ...product,
       price: String(product?.price),
@@ -100,7 +84,7 @@ export const ProductsEditForm: React.FC<CreateProductFormProps> = ({
   );
 
   const onSubmit = useCallback(
-    async (formValue: TypeOfFormSchema) => {
+    async (formValue: TypeOfProductsFormSchema) => {
       const collectionId = collections?.find(
         (collection) =>
           collection.collectionName.toLowerCase() === formValue.collectionName

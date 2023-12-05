@@ -20,18 +20,11 @@ import axios from "axios";
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
-
-const formSchema = z.object({
-  storeName: z
-    .string()
-    .min(1, { message: "Must be longer than one character" }),
-});
-
-type TypeOfFormSchema = z.infer<typeof formSchema>;
+import { createFormchema, TypeOfCreateFormchema } from "@/types/zodSchemas";
 
 export const FormCreate = () => {
-  const form = useForm<TypeOfFormSchema>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<TypeOfCreateFormchema>({
+    resolver: zodResolver(createFormchema),
     defaultValues: {
       storeName: "",
     },
@@ -40,7 +33,7 @@ export const FormCreate = () => {
   const router = useRouter();
   const [isLoading, setIsloading] = useState(false);
 
-  const onSubmit = async (data: TypeOfFormSchema) => {
+  const onSubmit = async (data: TypeOfCreateFormchema) => {
     try {
       setIsloading(true);
       const response = await axios.post("/api/stores/", data);

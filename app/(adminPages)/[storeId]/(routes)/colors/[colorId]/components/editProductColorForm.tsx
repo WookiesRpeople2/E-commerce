@@ -22,37 +22,17 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { AlerteModel } from "@/components/customUi/alerteModel";
 import { ProductColor } from "@prisma/client";
-
-const formSchema = z.object({
-  color: z
-    .string()
-    .min(1)
-    .refine(
-      (value) => {
-        try {
-          Color(value.toLowerCase());
-          return true;
-        } catch (error) {
-          return false;
-        }
-      },
-      {
-        message: "This is not a valid color",
-      }
-    ),
-});
+import { colorFormSchema, TypeOfColorFormSchema } from "@/types/zodSchemas";
 
 type EditProductColorFormProps = {
   data: ProductColor;
 };
 
-type TypeOfFormSchema = z.infer<typeof formSchema>;
-
 export const EditProductColorForm: React.FC<EditProductColorFormProps> = ({
   data,
 }) => {
-  const form = useForm<TypeOfFormSchema>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<TypeOfColorFormSchema>({
+    resolver: zodResolver(colorFormSchema),
     defaultValues: {
       color: data.color,
     },
@@ -62,7 +42,7 @@ export const EditProductColorForm: React.FC<EditProductColorFormProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(
-    async (formValue: TypeOfFormSchema) => {
+    async (formValue: TypeOfColorFormSchema) => {
       try {
         setIsLoading(true);
         await axios.patch(

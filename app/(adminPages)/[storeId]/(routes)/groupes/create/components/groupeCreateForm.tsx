@@ -19,16 +19,11 @@ import { Heading } from "@/components/customUi/heading";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-
-const formSchema = z.object({
-  groupe: z.string().min(1, { message: "Must be longer than one character" }),
-});
-
-type TypeOfFormSchema = z.infer<typeof formSchema>;
+import { groupeFormSchema, TypeOfGroupeFormSchema } from "@/types/zodSchemas";
 
 export const GroupeCreateForm = () => {
-  const form = useForm<TypeOfFormSchema>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<TypeOfGroupeFormSchema>({
+    resolver: zodResolver(groupeFormSchema),
     defaultValues: {
       groupe: "",
     },
@@ -38,7 +33,7 @@ export const GroupeCreateForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(
-    async (formValue: TypeOfFormSchema) => {
+    async (formValue: TypeOfGroupeFormSchema) => {
       try {
         setIsLoading(true);
         await axios.post(`/api/stores/${params.storeId}/groupes/`, formValue);

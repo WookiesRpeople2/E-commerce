@@ -21,17 +21,10 @@ import { useParams, useRouter } from "next/navigation";
 import { AlerteModel } from "@/components/customUi/alerteModel";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-
-const formSchema = z.object({
-  collectionName: z
-    .string()
-    .min(1, { message: "Must be longer than one character" }),
-  collectionImage: z
-    .string()
-    .min(1, { message: "Must have at least one image" }),
-});
-
-type TypeOfFormSchema = z.infer<typeof formSchema>;
+import {
+  collectionsFormSchema,
+  TypeOfCollectionsFormSchema,
+} from "@/types/zodSchemas";
 
 type CollectionAddEditFormProps = {
   data: Collection;
@@ -40,8 +33,8 @@ type CollectionAddEditFormProps = {
 export const CollectionEditForm: React.FC<CollectionAddEditFormProps> = ({
   data,
 }) => {
-  const form = useForm<TypeOfFormSchema>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<TypeOfCollectionsFormSchema>({
+    resolver: zodResolver(collectionsFormSchema),
     defaultValues: {
       collectionName: data.collectionName,
       collectionImage: data.collectionImage,
@@ -52,7 +45,7 @@ export const CollectionEditForm: React.FC<CollectionAddEditFormProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(
-    async (formValue: TypeOfFormSchema) => {
+    async (formValue: TypeOfCollectionsFormSchema) => {
       try {
         setIsLoading(true);
         await axios.patch(

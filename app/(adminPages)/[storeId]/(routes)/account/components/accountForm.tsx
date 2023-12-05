@@ -1,6 +1,5 @@
 "use client";
 
-import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -23,29 +22,18 @@ import { DefaultSession } from "next-auth";
 import { Heading } from "@/components/customUi/heading";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
-
-const formSchema = z
-  .object({
-    name: z.string().min(1, { message: "Must be longer than one character" }),
-    email: z.string().min(1, { message: "Must be longer than one character" }),
-    image: z.string().min(1, { message: "Must Have an image selected" }),
-    password: z.string().optional(),
-    confirm: z.string().optional(),
-  })
-  .refine((data) => data.password === data.confirm, {
-    message: "Passwords do not match",
-    path: ["confirm"],
-  });
-
-type TypeOfFormSchema = z.infer<typeof formSchema>;
+import {
+  sighnUpAndAccountFormSchema,
+  TypeOfSighnUpAndAccountFormSchema,
+} from "@/types/zodSchemas";
 
 type AccountFormProps = {
   session: DefaultSession | null;
 };
 
 export const AccountForm: React.FC<AccountFormProps> = ({ session }) => {
-  const form = useForm<TypeOfFormSchema>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<TypeOfSighnUpAndAccountFormSchema>({
+    resolver: zodResolver(sighnUpAndAccountFormSchema),
     defaultValues: {
       name: session?.user?.name || undefined,
       email: session?.user?.email || undefined,
@@ -60,7 +48,7 @@ export const AccountForm: React.FC<AccountFormProps> = ({ session }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(
-    async (formValues: TypeOfFormSchema) => {
+    async (formValues: TypeOfSighnUpAndAccountFormSchema) => {
       try {
         setIsLoading(true);
         const res = await axios.patch(`/api/auth/account`, formValues);
