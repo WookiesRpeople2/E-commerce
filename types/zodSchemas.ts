@@ -1,7 +1,7 @@
 import * as z from "zod";
 import Color from "color";
 //---------------------------------------
-export const sighnUpAndAccountFormSchema = z
+export const AccountFormSchema = z
   .object({
     name: z.string().min(1, { message: "Must be longer than one character" }),
     email: z.string().min(1, { message: "Must be longer than one character" }),
@@ -14,10 +14,24 @@ export const sighnUpAndAccountFormSchema = z
     path: ["confirm"],
   });
 
-export type TypeOfSighnUpAndAccountFormSchema = z.infer<
-  typeof sighnUpAndAccountFormSchema
->;
+export type TypeOfAccountFormSchema = z.infer<typeof AccountFormSchema>;
 //---------------------------------------
+
+export const sighnUpFormSchema = z
+  .object({
+    name: z.string().min(1, { message: "Must be longer than one character" }),
+    email: z.string().min(1, { message: "Must be longer than one character" }),
+    password: z.string().optional(),
+    confirm: z.string().optional(),
+  })
+  .refine((data) => data.password === data.confirm, {
+    message: "Passwords do not match",
+    path: ["confirm"],
+  });
+
+export type TypeOfSighnUpFormSchema = z.infer<typeof sighnUpFormSchema>;
+//---------------------------------------
+
 export const loginFormSchema = z.object({
   email: z.string().min(1, { message: "Must be longer than one character" }),
   password: z.string().min(1, { message: "Must be longer than one character" }),

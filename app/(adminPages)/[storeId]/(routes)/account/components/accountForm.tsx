@@ -22,18 +22,15 @@ import { DefaultSession } from "next-auth";
 import { Heading } from "@/components/customUi/heading";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
-import {
-  sighnUpAndAccountFormSchema,
-  TypeOfSighnUpAndAccountFormSchema,
-} from "@/types/zodSchemas";
+import { AccountFormSchema, TypeOfAccountFormSchema } from "@/types/zodSchemas";
 
 type AccountFormProps = {
   session: DefaultSession | null;
 };
 
 export const AccountForm: React.FC<AccountFormProps> = ({ session }) => {
-  const form = useForm<TypeOfSighnUpAndAccountFormSchema>({
-    resolver: zodResolver(sighnUpAndAccountFormSchema),
+  const form = useForm<TypeOfAccountFormSchema>({
+    resolver: zodResolver(AccountFormSchema),
     defaultValues: {
       name: session?.user?.name || undefined,
       email: session?.user?.email || undefined,
@@ -48,7 +45,7 @@ export const AccountForm: React.FC<AccountFormProps> = ({ session }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(
-    async (formValues: TypeOfSighnUpAndAccountFormSchema) => {
+    async (formValues: TypeOfAccountFormSchema) => {
       try {
         setIsLoading(true);
         const res = await axios.patch(`/api/auth/account`, formValues);

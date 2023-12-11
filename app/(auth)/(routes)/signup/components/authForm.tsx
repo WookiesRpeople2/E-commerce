@@ -19,15 +19,13 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { Separator } from "@/components/ui/separator";
 import { signIn } from "next-auth/react";
-import {
-  sighnUpAndAccountFormSchema,
-  TypeOfSighnUpAndAccountFormSchema,
-} from "@/types/zodSchemas";
+import { sighnUpFormSchema, TypeOfSighnUpFormSchema } from "@/types/zodSchemas";
 
 export const AuthForm = () => {
-  const form = useForm<TypeOfSighnUpAndAccountFormSchema>({
-    resolver: zodResolver(sighnUpAndAccountFormSchema),
+  const form = useForm<TypeOfSighnUpFormSchema>({
+    resolver: zodResolver(sighnUpFormSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
       confirm: "",
@@ -36,7 +34,7 @@ export const AuthForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = async (data: TypeOfSighnUpAndAccountFormSchema) => {
+  const onSubmit = async (data: TypeOfSighnUpFormSchema) => {
     try {
       setIsLoading(true);
       const res = await axios.post("api/auth/signup", data);
